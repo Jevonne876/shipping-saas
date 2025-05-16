@@ -12,6 +12,8 @@ CREATE TABLE customers (
     country VARCHAR(100),
     is_active BOOLEAN DEFAULT FALSE,
     pickup_location_id UUID REFERENCES pickup_locations(id),
+    warehouse_address_id UUID REFERENCES warehouse_addresses(id),
+    suite_code VARCHAR(50) UNIQUE NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

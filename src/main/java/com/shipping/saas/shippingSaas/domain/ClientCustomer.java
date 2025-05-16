@@ -37,6 +37,12 @@ public class ClientCustomer {
     @JoinColumn(name = "pickup_location_id")
     private PickUpLocation pickupLocation;
 
+    @ManyToOne
+    @JoinColumn(name = "warehouse_address_id")
+    private WarehouseAddress warehouseAddress;
+
+    private String suiteCode; // e.g., unique ID assigned to customer for that warehouse
+
     @Builder.Default
     private boolean isActive = false;
 

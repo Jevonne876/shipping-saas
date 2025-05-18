@@ -34,9 +34,9 @@ public class ClientUser {
     @Column(nullable = false)
     private String passwordHash;
 
-    @ManyToOne
-    @JoinColumn(name = "role_id")
-    private Role roleId;
+//    @ManyToOne
+//    @JoinColumn(name = "role_id")
+//    private Role roleId;
 
     @Builder.Default
     private boolean isActive = true;

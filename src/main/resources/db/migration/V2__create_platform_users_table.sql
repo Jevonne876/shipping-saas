@@ -5,6 +5,7 @@ CREATE TABLE platform_users(
     email VARCHAR(255) UNIQUE NOT NULL,
     phone_number VARCHAR(30) UNIQUE NOT NULL,
     password_hash TEXT NOT NULL,
+    user_type VARCHAR(20) NOT NULL,
     role_id UUID NOT NULL,
     is_active BOOLEAN DEFAULT TRUE,
     street_address VARCHAR(255),

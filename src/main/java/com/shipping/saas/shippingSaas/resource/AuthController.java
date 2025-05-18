@@ -1,5 +1,6 @@
 package com.shipping.saas.shippingSaas.resource;
 
+import com.shipping.saas.shippingSaas.domain.CustomUserDetails;
 import com.shipping.saas.shippingSaas.domain.dto.AuthRequest;
 import com.shipping.saas.shippingSaas.domain.dto.AuthResponse;
 import com.shipping.saas.shippingSaas.jwt.JwtUtil;
@@ -66,8 +67,8 @@ public class AuthController {
             );
         }
 
-        final UserDetails userDetails = platformUserService.loadUserByUsername(authRequest.getUsername());
-        final String jwt = jwtUtil.generateToken(userDetails.getUsername(), userDetails.getAuthorities().toString());
+        final CustomUserDetails userDetails = (CustomUserDetails) platformUserService.loadUserByUsername(authRequest.getUsername());
+        final String jwt = jwtUtil.generateToken(userDetails.getUsername(), userDetails.getAuthorities().toString(), userDetails.getUserType());
 
         return ResponseEntity.ok(new AuthResponse(jwt));
     }

@@ -1,5 +1,6 @@
 package com.shipping.saas.shippingSaas.domain;
 
+import com.shipping.saas.shippingSaas.domain.dto.UserType;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -31,6 +32,8 @@ public class PlatformUser {
 
     @Column(nullable = false)
     private String passwordHash;
+
+    private String userType;
 
     @ManyToOne
     @JoinColumn(name = "role_id")

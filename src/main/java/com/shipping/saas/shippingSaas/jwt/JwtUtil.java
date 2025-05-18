@@ -24,11 +24,12 @@ public class JwtUtil {
     }
 
 
-    public String generateToken(String email, String role) {
+    public String generateToken(String email, String role,String userType) {
 
         return Jwts.builder()
             .subject(email)
             .claim("role", role)
+            .claim("userType", userType)
             .issuedAt(new Date())
             .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
             .signWith(secretKey)
@@ -40,6 +41,15 @@ public class JwtUtil {
             .verifyWith(secretKey)
             .build()
             .parseSignedClaims(token)
+            .getPayload()
+            .getSubject();
+    }
+
+    public String extractUserType(String userType){
+        return  Jwts.parser()
+            .verifyWith(secretKey)
+            .build()
+            .parseSignedClaims(userType)
             .getPayload()
             .getSubject();
     }

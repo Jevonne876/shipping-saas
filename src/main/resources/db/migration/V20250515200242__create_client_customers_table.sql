@@ -6,6 +6,7 @@ CREATE TABLE customers (
     email VARCHAR(255),
     phone_number VARCHAR(30),
     address TEXT,
+    user_type VARCHAR(20) NOT NULL,
     city VARCHAR(100),
     state VARCHAR(100),
     postal_code VARCHAR(20),

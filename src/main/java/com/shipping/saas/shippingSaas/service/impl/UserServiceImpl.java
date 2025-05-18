@@ -4,6 +4,7 @@ package com.shipping.saas.shippingSaas.service.impl;
 import com.shipping.saas.shippingSaas.domain.Permission;
 import com.shipping.saas.shippingSaas.domain.PlatformUser;
 import com.shipping.saas.shippingSaas.domain.Role;
+import com.shipping.saas.shippingSaas.domain.dto.UserType;
 import com.shipping.saas.shippingSaas.repository.PermissionsRepository;
 import com.shipping.saas.shippingSaas.repository.PlatformUserRepository;
 import com.shipping.saas.shippingSaas.repository.RoleRepository;
@@ -57,6 +58,7 @@ public class UserServiceImpl implements UserService {
         newUser.setEmail(platformUser.getEmail());
         newUser.setPhoneNumber(platformUser.getPhoneNumber());
         newUser.setPasswordHash(passwordEncoder.encode(platformUser.getPasswordHash()));
+        newUser.setUserType(UserType.PLATFORM.name());
         newUser.setRoleId(savedRole); // use managed role
         newUser.setStreetAddress(platformUser.getStreetAddress());
         newUser.setCity(platformUser.getCity());

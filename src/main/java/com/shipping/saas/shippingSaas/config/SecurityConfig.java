@@ -1,7 +1,7 @@
 package com.shipping.saas.shippingSaas.config;
 
 import com.shipping.saas.shippingSaas.filter.JwtRequestFilter;
-import com.shipping.saas.shippingSaas.service.impl.PlatformUserService;
+import com.shipping.saas.shippingSaas.service.PlatformUserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -35,7 +35,6 @@ public class SecurityConfig {
         httpSecurity
             .csrf(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(auth -> auth
-//                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .requestMatchers("/auth/**").permitAll()
                 .requestMatchers("/api/**").permitAll()
                 .anyRequest().fullyAuthenticated())

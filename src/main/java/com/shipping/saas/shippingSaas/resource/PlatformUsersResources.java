@@ -1,34 +1,29 @@
 package com.shipping.saas.shippingSaas.resource;
 
 import com.shipping.saas.shippingSaas.domain.PlatformUser;
+import com.shipping.saas.shippingSaas.domain.dto.PlatformUserDTO;
 import com.shipping.saas.shippingSaas.service.impl.UserServiceImpl;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.net.URI;
+import static org.springframework.http.HttpStatus.OK;
 
 @RestController
 @RequestMapping("/api/platform-users")
-public class PlatformUserResource {
+@AllArgsConstructor
+public class PlatformUsersResources {
 
 
     private final UserServiceImpl userService;
 
-    public PlatformUserResource(UserServiceImpl userService) {
-        this.userService = userService;
-    }
+    @PostMapping("")
+    public ResponseEntity<PlatformUser> createNewUser(@RequestBody PlatformUserDTO platformUser) throws Exception {
 
-    @PostMapping("/register")
-    public ResponseEntity<?> createPlatformUser(@RequestBody PlatformUser newUser) {
-
-        PlatformUser savedUser = userService.save(newUser);
-
-        URI location = URI.create("/register/" + savedUser.getId());
-
-        return ResponseEntity.created(location).body(savedUser);
+        return new ResponseEntity<>(userService.save(platformUser), OK);
 
     }
 }

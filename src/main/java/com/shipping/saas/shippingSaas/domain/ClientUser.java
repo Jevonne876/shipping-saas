@@ -1,7 +1,10 @@
 package com.shipping.saas.shippingSaas.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.Instant;
 import java.util.UUID;
@@ -23,27 +26,35 @@ public class ClientUser {
     @JoinColumn(name = "client_id")
     private Client client;
 
+    @Column(nullable = false)
     private String firstName;
+
+    @Column(nullable = false)
     private String lastName;
 
     @Column(unique = true, nullable = false)
     private String email;
 
+    @Column(nullable = false)
     private String phoneNumber;
 
     @Column(nullable = false)
+    @JsonIgnore
     private String passwordHash;
 
-//    @ManyToOne
-//    @JoinColumn(name = "role_id")
-//    private Role roleId;
+    @Column(nullable = false)
+    private String userType;
+
+    @ManyToOne
+    @JoinColumn(name = "role_id")
+    private Role roleId;
 
     @Builder.Default
     private boolean isActive = true;
 
-    @Builder.Default
-    private Instant createdAt = Instant.now();
+    @CreatedDate
+    private Instant createdAt;
 
-    @Builder.Default
-    private Instant updatedAt = Instant.now();
+    @LastModifiedDate
+    private Instant updatedAt;
 }

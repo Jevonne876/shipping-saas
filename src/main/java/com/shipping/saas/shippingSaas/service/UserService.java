@@ -1,24 +1,21 @@
 package com.shipping.saas.shippingSaas.service;
 
 import com.shipping.saas.shippingSaas.domain.PlatformUser;
-import org.springframework.data.domain.Page;
+import com.shipping.saas.shippingSaas.domain.dto.PlatformUserDTO;
 
-import java.util.List;
 import java.util.Optional;
 
 public interface UserService {
 
 
-    PlatformUser save(PlatformUser platformUser);
+    PlatformUser save(PlatformUserDTO newUser) throws Exception;
 
-    PlatformUser updateUser(PlatformUser platformUser);
+    PlatformUser update(String id, PlatformUserService platformUserService);
+
+    Optional<PlatformUser> findById(String id);
 
     Optional<PlatformUser> findByEmail(String email);
 
-    Optional<PlatformUser> findById(String email);
-
-    List<PlatformUser> findAll();
-
-    Page<PlatformUser> findAllPageable();
+    Optional<PlatformUser> findByUsername(String userName);
 
 }

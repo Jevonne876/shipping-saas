@@ -1,78 +1,62 @@
 package com.shipping.saas.shippingSaas.service.impl;
 
-
-import com.shipping.saas.shippingSaas.domain.Permission;
 import com.shipping.saas.shippingSaas.domain.PlatformUser;
 import com.shipping.saas.shippingSaas.domain.Role;
+import com.shipping.saas.shippingSaas.domain.dto.PlatformUserDTO;
 import com.shipping.saas.shippingSaas.domain.dto.UserType;
-import com.shipping.saas.shippingSaas.repository.PermissionsRepository;
 import com.shipping.saas.shippingSaas.repository.PlatformUserRepository;
 import com.shipping.saas.shippingSaas.repository.RoleRepository;
+import com.shipping.saas.shippingSaas.service.PlatformUserService;
 import com.shipping.saas.shippingSaas.service.UserService;
-import org.springframework.data.domain.Page;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
+    private final PlatformUserRepository platformUserRepository;
 
-    private final PlatformUserRepository userRepository;
+    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     private final RoleRepository roleRepository;
 
-    private final PermissionsRepository permissionsRepository;
+    @Override
+    public PlatformUser save(PlatformUserDTO newUser) throws Exception {
 
-    private final BCryptPasswordEncoder passwordEncoder;
+        PlatformUser platformUser = new PlatformUser();
 
-    public UserServiceImpl(PlatformUserRepository userRepository, RoleRepository roleRepository, PermissionsRepository permissionsRepository, BCryptPasswordEncoder passwordEncoder) {
-        this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
-        this.permissionsRepository = permissionsRepository;
-        this.passwordEncoder = passwordEncoder;
+        Role role = roleRepository.findByName(newUser.getRole())
+            .orElseThrow(() -> new Exception("Role not found."));
+
+
+        platformUser.setUserType(UserType.PLATFORM_USER.name());
+        platformUser.setFirstName(newUser.getFirstName());
+        platformUser.setLastName(newUser.getLastName());
+        platformUser.setEmail(newUser.getEmail());
+        platformUser.setPhoneNumber(newUser.getPhoneNumber());
+        platformUser.setPasswordHash(passwordEncoder.encode(newUser.getPasswordHash()));
+        platformUser.setRoleId(role);
+        platformUser.setStreetAddress(newUser.getStreetAddress());
+        platformUser.setCity(newUser.getCity());
+        platformUser.setState(newUser.getState());
+        platformUser.setPostalCode(newUser.getPostalCode());
+        platformUser.setCountry(newUser.getCountry());
+
+        return platformUserRepository.save(platformUser);
     }
 
-
     @Override
-    public PlatformUser save(PlatformUser platformUser) {
-        // 1. Create and save permission
-        Permission permission = new Permission();
-        permission.setName("CREATE");
-        permission.setDescription("can create");
-
-        Permission savedPermission = permissionsRepository.save(permission); // returns a managed entity
-
-        // 2. Create and save role
-        Role role = new Role();
-        role.setName("ROLE_ADMIN");
-        role.setDescription("Main user admin");
-        role.setPermissions(Set.of(savedPermission)); // use managed entity
-        Role savedRole = roleRepository.save(role);
-
-        // 3. Create and save user
-        PlatformUser newUser = new PlatformUser();
-        newUser.setFirstName(platformUser.getFirstName());
-        newUser.setLastName(platformUser.getLastName());
-        newUser.setEmail(platformUser.getEmail());
-        newUser.setPhoneNumber(platformUser.getPhoneNumber());
-        newUser.setPasswordHash(passwordEncoder.encode(platformUser.getPasswordHash()));
-        newUser.setUserType(UserType.PLATFORM.name());
-        newUser.setRoleId(savedRole); // use managed role
-        newUser.setStreetAddress(platformUser.getStreetAddress());
-        newUser.setCity(platformUser.getCity());
-        newUser.setState(platformUser.getState());
-        newUser.setPostalCode(platformUser.getPostalCode());
-        newUser.setCountry(platformUser.getCountry());
-
-        return userRepository.save(newUser);
-    }
-
-
-    @Override
-    public PlatformUser updateUser(PlatformUser platformUser) {
+    public PlatformUser update(String id, PlatformUserService platformUserService) {
         return null;
+    }
+
+    @Override
+    public Optional<PlatformUser> findById(String id) {
+        return Optional.empty();
     }
 
     @Override
@@ -81,17 +65,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<PlatformUser> findById(String email) {
+    public Optional<PlatformUser> findByUsername(String userName) {
         return Optional.empty();
     }
 
-    @Override
-    public List<PlatformUser> findAll() {
-        return List.of();
-    }
 
-    @Override
-    public Page<PlatformUser> findAllPageable() {
-        return null;
-    }
 }

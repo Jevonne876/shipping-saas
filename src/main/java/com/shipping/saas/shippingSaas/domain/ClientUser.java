@@ -49,9 +49,8 @@ public class ClientUser {
     @JoinColumn(name = "role_id")
     private Role roleId;
 
-
+    @Builder.Default
     private boolean isActive = true;
-
 
     @CreatedDate
     private Instant createdAt;

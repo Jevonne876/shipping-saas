@@ -43,6 +43,7 @@ public class PlatformUser {
     @Column(nullable = false)
     private String userType;
 
+    @Builder.Default
     private boolean isActive = true;
 
     private String streetAddress;

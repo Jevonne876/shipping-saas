@@ -60,6 +60,7 @@ public class ClientCustomer {
     @Column(nullable = false)
     private String userType;
 
+    @Builder.Default
     private boolean isActive = false;
 
     @CreatedDate

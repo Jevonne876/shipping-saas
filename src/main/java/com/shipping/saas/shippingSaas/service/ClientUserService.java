@@ -29,7 +29,7 @@ public class ClientUserService implements UserDetailsService {
         return new User(
             user.getEmail(),
             user.getPasswordHash(),
-            List.of(SimpleGrantedAuthority(user.getRoleId().getName()))
+            List.of(new SimpleGrantedAuthority(user.getRoleId().getName()))
         );
     }
 }

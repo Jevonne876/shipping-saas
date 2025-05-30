@@ -1,6 +1,7 @@
 package com.shipping.saas.shippingSaas.service;
 
 
+import com.shipping.saas.shippingSaas.domain.CustomUserDetails;
 import com.shipping.saas.shippingSaas.domain.PlatformUser;
 import com.shipping.saas.shippingSaas.repository.PlatformUserRepository;
 import lombok.RequiredArgsConstructor;
@@ -27,9 +28,11 @@ public class PlatformUserService implements UserDetailsService {
             .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
 
-        return new User(
-            user.getEmail(),
-            user.getPasswordHash(),
-            List.of(new SimpleGrantedAuthority(user.getRoleId().getName())));
+        return new CustomUserDetails(
+                user.getEmail(),
+                user.getPasswordHash(),
+                List.of(new SimpleGrantedAuthority(user.getRoleId().getName())),
+                user.getUserType() // Or .name() if it's an enum
+        );
     }
 }

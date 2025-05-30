@@ -1,6 +1,7 @@
 package com.shipping.saas.shippingSaas.service;
 
 import com.shipping.saas.shippingSaas.domain.ClientUser;
+import com.shipping.saas.shippingSaas.domain.CustomUserDetails;
 import com.shipping.saas.shippingSaas.repository.ClientUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -26,10 +27,11 @@ public class ClientUserService implements UserDetailsService {
             .orElseThrow(() -> new UsernameNotFoundException(username));
 
 
-        return new User(
-            user.getEmail(),
-            user.getPasswordHash(),
-            List.of(new SimpleGrantedAuthority(user.getRoleId().getName()))
+        return new CustomUserDetails(
+                user.getEmail(),
+                user.getPasswordHash(),
+                List.of(new SimpleGrantedAuthority(user.getRoleId().getName())),
+                user.getUserType() // Or .name() if it's an enum
         );
     }
 }

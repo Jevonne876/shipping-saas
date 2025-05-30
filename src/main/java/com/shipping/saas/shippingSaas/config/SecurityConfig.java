@@ -1,7 +1,7 @@
 package com.shipping.saas.shippingSaas.config;
 
 import com.shipping.saas.shippingSaas.filter.JwtRequestFilter;
-import com.shipping.saas.shippingSaas.service.PlatformUserService;
+import com.shipping.saas.shippingSaas.service.impl.PlatformUserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;

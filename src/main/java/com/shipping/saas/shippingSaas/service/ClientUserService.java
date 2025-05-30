@@ -1,37 +1,19 @@
 package com.shipping.saas.shippingSaas.service;
 
 import com.shipping.saas.shippingSaas.domain.ClientUser;
-import com.shipping.saas.shippingSaas.domain.CustomUserDetails;
-import com.shipping.saas.shippingSaas.repository.ClientUserRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
+import com.shipping.saas.shippingSaas.domain.dto.ClientUserDTO;
 
 import java.util.List;
 
-@Service
-@RequiredArgsConstructor
-public class ClientUserService implements UserDetailsService {
 
-    private final ClientUserRepository clientUserRepository;
+public interface ClientUserService {
 
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    ClientUser create(ClientUserDTO clientUser) throws Exception;
+    ClientUser update(ClientUser clientUser);
+    ClientUser delete(Long id);
+    ClientUser findById(Long id);
+    List<ClientUser> findAll();
+    List<ClientUser> findByClientId(Long clientId);
 
-        ClientUser user = clientUserRepository.findByEmail(username)
-            .orElseThrow(() -> new UsernameNotFoundException(username));
-
-
-        return new CustomUserDetails(
-                user.getEmail(),
-                user.getPasswordHash(),
-                List.of(new SimpleGrantedAuthority(user.getRoleId().getName())),
-                user.getUserType() // Or .name() if it's an enum
-        );
-    }
 }

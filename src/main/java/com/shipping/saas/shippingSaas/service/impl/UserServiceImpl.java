@@ -6,7 +6,6 @@ import com.shipping.saas.shippingSaas.domain.dto.PlatformUserDTO;
 import com.shipping.saas.shippingSaas.domain.dto.UserType;
 import com.shipping.saas.shippingSaas.repository.PlatformUserRepository;
 import com.shipping.saas.shippingSaas.repository.RoleRepository;
-import com.shipping.saas.shippingSaas.service.PlatformUserService;
 import com.shipping.saas.shippingSaas.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

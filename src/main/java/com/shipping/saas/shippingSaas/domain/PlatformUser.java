@@ -1,7 +1,11 @@
 package com.shipping.saas.shippingSaas.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.Instant;
 import java.util.UUID;
@@ -13,6 +17,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@EntityListeners(AuditingEntityListener.class)
 public class PlatformUser {
 
     @Id
@@ -30,11 +35,15 @@ public class PlatformUser {
     private String phoneNumber;
 
     @Column(nullable = false)
+    @JsonIgnore
     private String passwordHash;
 
     @ManyToOne
     @JoinColumn(name = "role_id")
     private Role roleId;
+
+    @Column(nullable = false)
+    private String userType;
 
     @Builder.Default
     private boolean isActive = true;
@@ -45,10 +54,11 @@ public class PlatformUser {
     private String postalCode;
     private String country;
 
-    @Builder.Default
-    private Instant createdAt = Instant.now();
-    @Builder.Default
-    private Instant updatedAt = Instant.now();
+    @CreatedDate
+    private Instant createdAt;
+
+    @LastModifiedDate
+    private Instant updatedAt;
 
 
 }

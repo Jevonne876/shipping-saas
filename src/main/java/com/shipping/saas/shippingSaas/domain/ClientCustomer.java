@@ -2,6 +2,8 @@ package com.shipping.saas.shippingSaas.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.Instant;
 import java.util.UUID;
@@ -23,14 +25,26 @@ public class ClientCustomer {
     @JoinColumn(name = "client_id")
     private Client client;
 
+    @Column(nullable = false)
     private String firstName;
+
+    @Column(nullable = false)
     private String lastName;
+
+    @Column(nullable = false)
     private String email;
+
+    @Column(nullable = false)
     private String phoneNumber;
+
     private String address;
+
     private String city;
+
     private String state;
+
     private String postalCode;
+
     private String country;
 
     @ManyToOne
@@ -43,12 +57,15 @@ public class ClientCustomer {
 
     private String suiteCode; // e.g., unique ID assigned to customer for that warehouse
 
+    @Column(nullable = false)
+    private String userType;
+
     @Builder.Default
     private boolean isActive = false;
 
-    @Builder.Default
-    private Instant createdAt = Instant.now();
+    @CreatedDate
+    private Instant createdAt;
 
-    @Builder.Default
-    private Instant updatedAt = Instant.now();
+    @LastModifiedDate
+    private Instant updatedAt;
 }

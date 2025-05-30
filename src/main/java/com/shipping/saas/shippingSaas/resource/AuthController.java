@@ -3,7 +3,7 @@ package com.shipping.saas.shippingSaas.resource;
 import com.shipping.saas.shippingSaas.domain.dto.AuthRequest;
 import com.shipping.saas.shippingSaas.domain.dto.AuthResponse;
 import com.shipping.saas.shippingSaas.jwt.JwtUtil;
-import com.shipping.saas.shippingSaas.service.impl.PlatformUserService;
+import com.shipping.saas.shippingSaas.service.PlatformUserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

@@ -1,7 +1,7 @@
 package com.shipping.saas.shippingSaas.filter;
 
 import com.shipping.saas.shippingSaas.jwt.JwtUtil;
-import com.shipping.saas.shippingSaas.service.impl.PlatformUserService;
+import com.shipping.saas.shippingSaas.service.PlatformUserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -35,6 +35,13 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
         String username = null;
         String jwt = null;
+
+
+        if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
+            // No token — skip authentication and continue
+            filterChain.doFilter(request, response);
+            return;
+        }
 
 
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {

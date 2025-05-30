@@ -21,7 +21,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class ClientUserService implements UserDetailsService, com.shipping.saas.shippingSaas.service.ClientUserService {
+public class ClientUserServiceImpl implements UserDetailsService, com.shipping.saas.shippingSaas.service.ClientUserService {
 
     private final ClientUserRepository clientUserRepository;
 

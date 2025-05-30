@@ -1,7 +1,7 @@
 package com.shipping.saas.shippingSaas.filter;
 
 import com.shipping.saas.shippingSaas.jwt.JwtUtil;
-import com.shipping.saas.shippingSaas.service.impl.ClientUserService;
+import com.shipping.saas.shippingSaas.service.impl.ClientUserServiceImpl;
 import com.shipping.saas.shippingSaas.service.impl.PlatformUserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -25,7 +25,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
     private final PlatformUserService platformUserService;
 
-    private final ClientUserService clientUserService;
+    private final ClientUserServiceImpl clientUserService;
 
 
     @Override

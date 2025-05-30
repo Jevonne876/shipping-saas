@@ -1,71 +1,66 @@
 package com.shipping.saas.shippingSaas.domain;
 
+
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.Instant;
 import java.util.UUID;
 
 @Entity
-@Table(name = "customers")
+@Table(
+    name = "client_customers",
+    uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"client_id", "customer_id"}),
+        @UniqueConstraint(columnNames = {"suite_code"})
+    })
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@EntityListeners(AuditingEntityListener.class)
 public class ClientCustomer {
 
     @Id
-    @GeneratedValue
     private UUID id;
 
-    @ManyToOne
-    @JoinColumn(name = "client_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "client_id", nullable = false)
     private Client client;
 
-    @Column(nullable = false)
-    private String firstName;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "customer_id", nullable = false)
+    private Customers customer;
 
-    @Column(nullable = false)
-    private String lastName;
+    @Column(name = "suite_code", nullable = false, unique = true)
+    private String suiteCode;
 
-    @Column(nullable = false)
-    private String email;
-
-    @Column(nullable = false)
-    private String phoneNumber;
-
-    private String address;
-
-    private String city;
-
-    private String state;
-
-    private String postalCode;
-
-    private String country;
-
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "pickup_location_id")
     private PickUpLocation pickupLocation;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "warehouse_address_id")
     private WarehouseAddress warehouseAddress;
 
-    private String suiteCode; // e.g., unique ID assigned to customer for that warehouse
-
-    @Column(nullable = false)
+    @Column(name = "user_type", nullable = false)
     private String userType;
 
+    @Column(name = "is_active")
     @Builder.Default
-    private boolean isActive = false;
+    private Boolean isActive = true;
 
     @CreatedDate
+    @Column(name = "created_at", updatable = false)
     private Instant createdAt;
 
     @LastModifiedDate
+    @Column(name = "updated_at")
     private Instant updatedAt;
+
+
 }

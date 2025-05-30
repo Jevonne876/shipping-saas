@@ -4,7 +4,7 @@ import com.shipping.saas.shippingSaas.domain.CustomUserDetails;
 import com.shipping.saas.shippingSaas.domain.dto.AuthRequest;
 import com.shipping.saas.shippingSaas.domain.dto.AuthResponse;
 import com.shipping.saas.shippingSaas.jwt.JwtUtil;
-import com.shipping.saas.shippingSaas.service.impl.ClientUserService;
+import com.shipping.saas.shippingSaas.service.impl.ClientUserServiceImpl;
 import com.shipping.saas.shippingSaas.service.impl.PlatformUserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -28,7 +28,7 @@ public class AuthController {
 
     private final PlatformUserService platformUserService;
 
-    private final ClientUserService clientUserService;
+    private final ClientUserServiceImpl clientUserServiceImpl;
 
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
@@ -44,7 +44,7 @@ public class AuthController {
             userDetails = (CustomUserDetails) platformUserService.loadUserByUsername(authRequest.getUsername());
         } catch (UsernameNotFoundException ex) {
             try {
-                userDetails = (CustomUserDetails) clientUserService.loadUserByUsername(authRequest.getUsername());
+                userDetails = (CustomUserDetails) clientUserServiceImpl.loadUserByUsername(authRequest.getUsername());
             } catch (UsernameNotFoundException e) {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
             }

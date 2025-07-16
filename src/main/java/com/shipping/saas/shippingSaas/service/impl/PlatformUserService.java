@@ -28,10 +28,14 @@ public class PlatformUserService implements UserDetailsService {
 
 
         return new CustomUserDetails(
-                user.getEmail(),
-                user.getPasswordHash(),
-                List.of(new SimpleGrantedAuthority(user.getRoleId().getName())),
-                user.getUserType() // Or .name() if it's an enum
+            user.getEmail(),
+            user.getPasswordHash(),
+            List.of(new SimpleGrantedAuthority(user.getRoleId().getName())),
+            user.getUserType() // Or .name() if it's an enum
         );
+    }
+
+    public PlatformUser findByEmail(String email) {
+        return platformUserRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 }

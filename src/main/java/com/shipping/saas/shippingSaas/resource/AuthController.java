@@ -1,6 +1,7 @@
 package com.shipping.saas.shippingSaas.resource;
 
 import com.shipping.saas.shippingSaas.domain.CustomUserDetails;
+import com.shipping.saas.shippingSaas.domain.PlatformUser;
 import com.shipping.saas.shippingSaas.domain.dto.AuthRequest;
 import com.shipping.saas.shippingSaas.domain.dto.AuthResponse;
 import com.shipping.saas.shippingSaas.jwt.JwtUtil;
@@ -12,10 +13,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import static org.springframework.http.HttpStatus.OK;
 
 @RestController
 @RequestMapping("/auth")
@@ -62,6 +62,12 @@ public class AuthController {
         );
 
         return ResponseEntity.ok(new AuthResponse(jwt));
+    }
+
+    @GetMapping("/me/{email}")
+    public ResponseEntity<PlatformUser> getCurrentUser(@PathVariable String email) {
+
+        return new ResponseEntity<>(platformUserService.findByEmail(email), OK);
     }
 
 

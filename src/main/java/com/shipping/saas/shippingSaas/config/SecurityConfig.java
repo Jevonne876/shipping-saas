@@ -14,6 +14,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @EnableWebSecurity
@@ -27,6 +29,22 @@ public class SecurityConfig {
     public SecurityConfig(PlatformUserService platformUserService, JwtRequestFilter jwtRequestFilter) {
         this.platformUserService = platformUserService;
         this.jwtRequestFilter = jwtRequestFilter;
+    }
+
+
+    @Bean
+    public WebMvcConfigurer cors() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry reg) {
+                reg.addMapping("/**")
+                    .allowedOrigins("http://localhost:5173",   // Vite dev
+                        "https://app.shipmaxja.com")
+                    .allowedMethods("*")
+                    .allowedHeaders("*")
+                    .allowCredentials(true);
+            }
+        };
     }
 
     @Bean

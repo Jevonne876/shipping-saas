@@ -6,6 +6,7 @@ import com.shipping.saas.shippingSaas.service.ClientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -51,6 +52,12 @@ public class ClientServiceImpl implements ClientService {
     public Client findByName(String name) {
         return clientRepository.findByName(name)
             .orElseThrow(() -> new IllegalArgumentException("Client not found"));
+    }
+
+    @Override
+    public List<Client> findAll() {
+
+        return clientRepository.findAll();
     }
 
     @Override

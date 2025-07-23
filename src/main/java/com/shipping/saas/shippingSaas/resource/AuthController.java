@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -64,10 +65,11 @@ public class AuthController {
         return ResponseEntity.ok(new AuthResponse(jwt));
     }
 
-    @GetMapping("/me/{email}")
-    public ResponseEntity<PlatformUser> getCurrentUser(@PathVariable String email) {
-
-        return new ResponseEntity<>(platformUserService.findByEmail(email), OK);
+    @GetMapping("/me")
+    public ResponseEntity<PlatformUser> getCurrentUser(Authentication auth) {
+        String email = auth.getName(); // comes from JWT
+        PlatformUser user = platformUserService.findByEmail(email);
+        return ResponseEntity.ok(user);
     }
 
 

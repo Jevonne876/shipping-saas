@@ -1,5 +1,6 @@
 package com.shipping.saas.shippingSaas.jwt;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
@@ -45,14 +46,16 @@ public class JwtUtil {
             .getSubject();
     }
 
-    public String extractUserType(String userType){
-        return  Jwts.parser()
+    public String extractUserType(String token) {
+        Claims claims = Jwts.parser()
             .verifyWith(secretKey)
             .build()
-            .parseSignedClaims(userType)
-            .getPayload()
-            .getSubject();
+            .parseSignedClaims(token)
+            .getPayload();
+
+        return claims.get("userType", String.class); // ✅ Get the userType claim from the payload
     }
+
 
     public String extractRole(String token) {
         return Jwts.parser()

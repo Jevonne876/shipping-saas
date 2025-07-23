@@ -2,7 +2,7 @@ package com.shipping.saas.shippingSaas.service;
 
 import com.shipping.saas.shippingSaas.domain.Client;
 
-import java.util.Optional;
+import java.util.List;
 import java.util.UUID;
 
 public interface ClientService {
@@ -15,6 +15,8 @@ public interface ClientService {
     Client findById(UUID clientId);
 
     Client findByName(String name);
+
+    List<Client> findAll();
 
     void deleteById(UUID clientId);
 

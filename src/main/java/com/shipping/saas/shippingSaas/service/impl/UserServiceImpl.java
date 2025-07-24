@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -46,6 +47,11 @@ public class UserServiceImpl implements UserService {
         platformUser.setCountry(newUser.getCountry());
 
         return platformUserRepository.save(platformUser);
+    }
+
+    @Override
+    public List<PlatformUser> findAll() {
+        return platformUserRepository.findAll();
     }
 
     @Override

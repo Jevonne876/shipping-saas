@@ -17,10 +17,12 @@ public interface UserService {
 
     List<PlatformUser> findAll();
 
-    Optional<PlatformUser> findById(String id);
+    Optional<PlatformUser> findById(UUID id);
 
     Optional<PlatformUser> findByEmail(String email);
 
     Optional<PlatformUser> findByUsername(String userName);
+
+
 
 }

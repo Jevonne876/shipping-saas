@@ -11,6 +11,7 @@ import com.shipping.saas.shippingSaas.repository.PlatformUserRepository;
 import com.shipping.saas.shippingSaas.repository.RoleRepository;
 import com.shipping.saas.shippingSaas.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -18,8 +19,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+/**
+ * The type User service.
+ */
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class UserServiceImpl implements UserService {
 
     private final PlatformUserRepository platformUserRepository;
@@ -30,6 +35,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public PlatformUser save(PlatformUserDTO newUser) throws Exception, BadRequestException {
+
+        log.debug("save platform user");
 
         PlatformUser platformUser = new PlatformUser();
 
@@ -50,16 +57,20 @@ public class UserServiceImpl implements UserService {
         platformUser.setPostalCode(newUser.getPostalCode());
         platformUser.setCountry(newUser.getCountry());
 
+
+
         return platformUserRepository.save(platformUser);
     }
 
     @Override
     public List<PlatformUser> findAll() {
+        log.debug("find all platform users");
         return platformUserRepository.findAll();
     }
 
     @Override
     public PlatformUser update(UUID id, PlatformUserDTO newUserData) throws Exception, BadRequestException {
+        log.debug("update platform user");
 
         PlatformUser platformUser = platformUserRepository.findById(id).orElseThrow(() -> new PlatformUserNotFoundException("User not found."));
 
@@ -86,19 +97,23 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<PlatformUser> findById(String id) {
-        return Optional.empty();
+    public Optional<PlatformUser> findById(UUID id) {
+        log.debug("find platform user by id {}", id);
+        return Optional.ofNullable(platformUserRepository.findById(id).orElseThrow(() -> new PlatformUserNotFoundException("User Not Found")));
     }
 
     @Override
     public Optional<PlatformUser> findByEmail(String email) {
-        return Optional.empty();
+        log.debug("find platform user by email {}", email);
+        return Optional.ofNullable(platformUserRepository.findByEmail(email).orElseThrow(() -> new PlatformUserNotFoundException("User Not Found")));
     }
 
     @Override
     public Optional<PlatformUser> findByUsername(String userName) {
-        return Optional.empty();
+        log.debug("find platform user by username {}", userName);
+        return Optional.ofNullable(platformUserRepository.findByEmail(userName).orElseThrow(() -> new PlatformUserNotFoundException("User Not Found")));
     }
+
 
 
 }

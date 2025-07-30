@@ -2,17 +2,18 @@ package com.shipping.saas.shippingSaas.service;
 
 import com.shipping.saas.shippingSaas.domain.PlatformUser;
 import com.shipping.saas.shippingSaas.domain.dto.PlatformUserDTO;
-import com.shipping.saas.shippingSaas.service.impl.PlatformUserService;
+import com.shipping.saas.shippingSaas.exceptions.BadRequestException;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 public interface UserService {
 
 
     PlatformUser save(PlatformUserDTO newUser) throws Exception;
 
-    PlatformUser update(String id, PlatformUserService platformUserService);
+    PlatformUser update(UUID id, PlatformUserDTO newUser) throws Exception;
 
     List<PlatformUser> findAll();
 

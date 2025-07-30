@@ -4,6 +4,9 @@ import com.shipping.saas.shippingSaas.domain.PlatformUser;
 import com.shipping.saas.shippingSaas.domain.Role;
 import com.shipping.saas.shippingSaas.domain.dto.PlatformUserDTO;
 import com.shipping.saas.shippingSaas.domain.dto.UserType;
+import com.shipping.saas.shippingSaas.exceptions.BadRequestException;
+import com.shipping.saas.shippingSaas.exceptions.DuplicateResourceException;
+import com.shipping.saas.shippingSaas.exceptions.PlatformUserNotFoundException;
 import com.shipping.saas.shippingSaas.repository.PlatformUserRepository;
 import com.shipping.saas.shippingSaas.repository.RoleRepository;
 import com.shipping.saas.shippingSaas.service.UserService;
@@ -13,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -25,7 +29,7 @@ public class UserServiceImpl implements UserService {
     private final RoleRepository roleRepository;
 
     @Override
-    public PlatformUser save(PlatformUserDTO newUser) throws Exception {
+    public PlatformUser save(PlatformUserDTO newUser) throws Exception, BadRequestException {
 
         PlatformUser platformUser = new PlatformUser();
 
@@ -55,8 +59,30 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public PlatformUser update(String id, PlatformUserService platformUserService) {
-        return null;
+    public PlatformUser update(UUID id, PlatformUserDTO newUserData) throws Exception, BadRequestException {
+
+        PlatformUser platformUser = platformUserRepository.findById(id).orElseThrow(() -> new PlatformUserNotFoundException("User not found."));
+
+        // ✅ Check if another user has the same email
+        if (platformUserRepository.existsByEmailAndIdNot(newUserData.getEmail(), id)) {
+            throw new DuplicateResourceException("Email is already in use by another user.");
+        }
+
+        // ✅ Check if another user has the same phone number
+        if (platformUserRepository.existsByPhoneNumberAndIdNot(newUserData.getPhoneNumber(), id)) {
+            throw new DuplicateResourceException("Phone number is already in use by another user.");
+        }
+
+        platformUser.setFirstName(newUserData.getFirstName());
+        platformUser.setLastName(newUserData.getLastName());
+        platformUser.setEmail(newUserData.getEmail());
+        platformUser.setPhoneNumber(newUserData.getPhoneNumber());
+        platformUser.setStreetAddress(newUserData.getStreetAddress());
+        platformUser.setCity(newUserData.getCity());
+        platformUser.setState(newUserData.getState());
+        platformUser.setPostalCode(newUserData.getPostalCode());
+        platformUser.setCountry(newUserData.getCountry());
+        return platformUserRepository.save(platformUser);
     }
 
     @Override

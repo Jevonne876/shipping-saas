@@ -1,5 +1,6 @@
 package com.shipping.saas.shippingSaas.filter;
 
+import com.shipping.saas.shippingSaas.exceptions.InvalidTokenException;
 import com.shipping.saas.shippingSaas.jwt.JwtUtil;
 import com.shipping.saas.shippingSaas.service.impl.ClientUserServiceImpl;
 import com.shipping.saas.shippingSaas.service.impl.PlatformUserService;

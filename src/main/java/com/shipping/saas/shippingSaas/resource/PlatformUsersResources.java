@@ -2,6 +2,7 @@ package com.shipping.saas.shippingSaas.resource;
 
 import com.shipping.saas.shippingSaas.domain.PlatformUser;
 import com.shipping.saas.shippingSaas.domain.dto.PlatformUserDTO;
+import com.shipping.saas.shippingSaas.exceptions.DuplicateResourceException;
 import com.shipping.saas.shippingSaas.exceptions.PlatformUserNotFoundException;
 import com.shipping.saas.shippingSaas.repository.PlatformUserRepository;
 import com.shipping.saas.shippingSaas.service.impl.UserServiceImpl;
@@ -12,6 +13,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import static org.springframework.http.HttpStatus.OK;
@@ -119,10 +121,13 @@ public class PlatformUsersResources {
      */
     @DeleteMapping("/delete/{id}")
     @PreAuthorize("hasAuthority('ROLE_PLATFORM_ADMIN')")
-    public ResponseEntity<Void> deleteUser(@PathVariable UUID id) throws PlatformUserNotFoundException {
-        log.info("deleting existing platform user with id {}", id);
-        //todo fix issue with user not having role above and still able to delete other users.
-        platformUserRepository.delete(userService.findById(id).orElseThrow(() -> new PlatformUserNotFoundException("User Not Found")));
-        return new ResponseEntity<>(OK);
+    public ResponseEntity<Map<String, String>> deleteUser(@PathVariable UUID id) throws PlatformUserNotFoundException {
+        log.info("Deleting existing platform user with id {}", id);
+
+        platformUserRepository.delete(
+            userService.findById(id).orElseThrow(() -> new PlatformUserNotFoundException("User Not Found"))
+        );
+
+        return ResponseEntity.ok(Map.of("message", "User deleted successfully"));
     }
 }

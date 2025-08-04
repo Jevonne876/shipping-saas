@@ -1,6 +1,5 @@
 package com.shipping.saas.shippingSaas.filter;
 
-import com.shipping.saas.shippingSaas.exceptions.InvalidTokenException;
 import com.shipping.saas.shippingSaas.jwt.JwtUtil;
 import com.shipping.saas.shippingSaas.service.impl.ClientUserServiceImpl;
 import com.shipping.saas.shippingSaas.service.impl.PlatformUserService;
@@ -17,6 +16,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.List;
 
 @Component
 @AllArgsConstructor
@@ -36,6 +36,15 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
         final String authHeader = request.getHeader("Authorization");
 
+        // ✅ Skip filtering for login and auth endpoints
+        String path = request.getServletPath();
+        List<String> excludePaths = List.of("/login", "/auth/login", "/auth/password-reset");
+        if (excludePaths.contains(path)) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
+
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
             return;
@@ -52,7 +61,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                 default -> throw new IllegalStateException("Unknown user type: " + userType);
             };
 
-            if (jwtUtil.isTokenValid(jwt, userDetails.getUsername())) { // <-- safer
+            if (jwtUtil.isTokenValid(jwt, userDetails.getUsername())) {
                 UsernamePasswordAuthenticationToken authToken =
                     new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 

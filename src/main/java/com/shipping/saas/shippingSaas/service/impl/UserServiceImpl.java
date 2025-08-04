@@ -34,16 +34,27 @@ public class UserServiceImpl implements UserService {
     private final RoleRepository roleRepository;
 
     @Override
-    public PlatformUser save(PlatformUserDTO newUser) throws Exception, BadRequestException {
+    public PlatformUser save(PlatformUserDTO newUser) throws Exception {
+        log.debug("Saving platform user");
 
-        log.debug("save platform user");
-
-        PlatformUser platformUser = new PlatformUser();
-
+        // ✅ Check if role exists
         Role role = roleRepository.findByName(newUser.getRole())
             .orElseThrow(() -> new Exception("Role not found."));
 
+        // ✅ Check if email already exists
+        platformUserRepository.findByEmail(newUser.getEmail())
+            .ifPresent(existing -> {
+                throw new DuplicateResourceException("Email already exists.");
+            });
 
+        // ✅ Check if phone number already exists
+        platformUserRepository.findByPhoneNumber(newUser.getPhoneNumber())
+            .ifPresent(existing -> {
+                throw new DuplicateResourceException("Phone number already exists.");
+            });
+
+        // ✅ Proceed to save new user
+        PlatformUser platformUser = new PlatformUser();
         platformUser.setUserType(UserType.PLATFORM_USER.name());
         platformUser.setFirstName(newUser.getFirstName());
         platformUser.setLastName(newUser.getLastName());
@@ -57,10 +68,9 @@ public class UserServiceImpl implements UserService {
         platformUser.setPostalCode(newUser.getPostalCode());
         platformUser.setCountry(newUser.getCountry());
 
-
-
         return platformUserRepository.save(platformUser);
     }
+
 
     @Override
     public List<PlatformUser> findAll() {
@@ -113,7 +123,6 @@ public class UserServiceImpl implements UserService {
         log.debug("find platform user by username {}", userName);
         return Optional.ofNullable(platformUserRepository.findByEmail(userName).orElseThrow(() -> new PlatformUserNotFoundException("User Not Found")));
     }
-
 
 
 }

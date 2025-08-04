@@ -10,14 +10,16 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import java.util.Map;
+
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(PlatformUserNotFoundException.class)
-    public ResponseEntity<ErrorResponse> handlePlatformUserNotFound(PlatformUserNotFoundException exception) {
-        ErrorResponse errorResponse = new ErrorResponse("PLATFORM_USER_NOT_FOUND", exception.getMessage(), HttpStatus.NOT_FOUND.value());
-        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
-    }
+//    @ExceptionHandler(PlatformUserNotFoundException.class)
+//    public ResponseEntity<ErrorResponse> handlePlatformUserNotFound(PlatformUserNotFoundException exception) {
+//        ErrorResponse errorResponse = new ErrorResponse("PLATFORM_USER_NOT_FOUND", exception.getMessage(), HttpStatus.NOT_FOUND.value());
+//        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+//    }
 
     @ExceptionHandler(ForbiddenAccessException.class)
     public ResponseEntity<ErrorResponse> handleForbiddenAccess(ForbiddenAccessException exception) {
@@ -54,6 +56,13 @@ public class GlobalExceptionHandler {
         ErrorResponse error = new ErrorResponse("ACCESS_DENIED",
             "You do not have permission to perform this action.", HttpStatus.FORBIDDEN.value());
         return new ResponseEntity<>(error, HttpStatus.FORBIDDEN); // 403
+    }
+
+    @ExceptionHandler(PlatformUserNotFoundException.class)
+    public ResponseEntity<Map<String, String>> handlePlatformUserNotFound(PlatformUserNotFoundException ex) {
+        return ResponseEntity
+            .status(HttpStatus.NOT_FOUND)
+            .body(Map.of("message", ex.getMessage(), "code", "PLATFORM_USER_NOT_FOUND"));
     }
 
 

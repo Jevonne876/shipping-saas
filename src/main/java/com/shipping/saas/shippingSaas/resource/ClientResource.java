@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
@@ -46,5 +47,15 @@ public class ClientResource {
         return new ResponseEntity<>(clientService.findAll(), OK);
     }
 
+    @GetMapping("{id}")
+    public ResponseEntity<Client> getClientById(@PathVariable UUID id) {
+        return new ResponseEntity<>(clientService.findById(id), OK);
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<Void> deleteClientById(@PathVariable UUID id) {
+        clientService.deleteById(id);
+        return new ResponseEntity<>(OK);
+    }
 
 }

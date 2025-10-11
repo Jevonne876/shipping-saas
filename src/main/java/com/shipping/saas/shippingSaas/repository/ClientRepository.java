@@ -1,6 +1,6 @@
 package com.shipping.saas.shippingSaas.repository;
 
-import com.shipping.saas.shippingSaas.domain.Client;
+import com.shipping.saas.shippingSaas.domain.clients.Client;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -16,6 +16,6 @@ public interface ClientRepository extends JpaRepository<Client, UUID> {
 
     boolean existsByEmailAndIdNot(String email, UUID id);
 
-    boolean existsByPhoneNumberAndIdNot(String phoneNumber, UUID id);
+
 
 }

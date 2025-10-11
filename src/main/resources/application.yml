@@ -2,12 +2,13 @@ server:
   port: 8080
 
 spring:
+  jackson:
+    time-zone: UTC
   datasource:
     url: jdbc:postgresql://localhost:5433/shipping-saas
     username: postgres
     password: root
     driver-class-name: org.postgresql.Driver
-
   jpa:
     hibernate:
       ddl-auto: validate  # Ensures Flyway is in control
@@ -15,6 +16,8 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+        jdbc:
+          time_zone: UTC
 
   flyway:
     enabled: true

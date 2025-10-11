@@ -1,7 +1,7 @@
 package com.shipping.saas.shippingSaas.service.impl;
 
-import com.shipping.saas.shippingSaas.domain.Client;
-import com.shipping.saas.shippingSaas.domain.ClientUser;
+import com.shipping.saas.shippingSaas.domain.clients.Client;
+import com.shipping.saas.shippingSaas.domain.clients.ClientUser;
 import com.shipping.saas.shippingSaas.domain.CustomUserDetails;
 import com.shipping.saas.shippingSaas.domain.Role;
 import com.shipping.saas.shippingSaas.domain.dto.ClientUserDTO;
@@ -42,7 +42,8 @@ public class ClientUserServiceImpl implements UserDetailsService, com.shipping.s
             user.getEmail(),
             user.getPasswordHash(),
             List.of(new SimpleGrantedAuthority(user.getRoleId().getName())),
-            user.getUserType() // Or .name() if it's an enum
+            "Testing",
+            user.getClient().getCompanyCode()
         );
     }
 
@@ -61,9 +62,7 @@ public class ClientUserServiceImpl implements UserDetailsService, com.shipping.s
             .firstName(clientUser.getFirstName())
             .lastName(clientUser.getLastName())
             .email(clientUser.getEmail())
-            .phoneNumber(clientUser.getPhoneNumber())
             .passwordHash(bCryptPasswordEncoder.encode(clientUser.getPasswordHash()))
-            .userType(UserType.CLIENT_USER.name())
             .roleId(role)
             .client(client)
             .build();

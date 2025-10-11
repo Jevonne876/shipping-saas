@@ -1,6 +1,7 @@
 package com.shipping.saas.shippingSaas.domain;
 
 
+import com.shipping.saas.shippingSaas.domain.clients.Client;
 import jakarta.persistence.*;
 import lombok.*;
 

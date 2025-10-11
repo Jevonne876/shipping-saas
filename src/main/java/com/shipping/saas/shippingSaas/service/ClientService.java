@@ -1,6 +1,6 @@
 package com.shipping.saas.shippingSaas.service;
 
-import com.shipping.saas.shippingSaas.domain.Client;
+import com.shipping.saas.shippingSaas.domain.clients.Client;
 
 import java.util.List;
 import java.util.UUID;

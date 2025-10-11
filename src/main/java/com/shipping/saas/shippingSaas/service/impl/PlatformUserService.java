@@ -31,7 +31,9 @@ public class PlatformUserService implements UserDetailsService {
             user.getEmail(),
             user.getPasswordHash(),
             List.of(new SimpleGrantedAuthority(user.getRoleId().getName())),
-            user.getUserType() // Or .name() if it's an enum
+            user.getUserType(), // Or .name() if it's an enum
+            "test"
+
         );
     }
 

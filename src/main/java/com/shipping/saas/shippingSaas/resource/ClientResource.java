@@ -1,6 +1,6 @@
 package com.shipping.saas.shippingSaas.resource;
 
-import com.shipping.saas.shippingSaas.domain.Client;
+import com.shipping.saas.shippingSaas.domain.clients.Client;
 import com.shipping.saas.shippingSaas.service.impl.ClientServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;

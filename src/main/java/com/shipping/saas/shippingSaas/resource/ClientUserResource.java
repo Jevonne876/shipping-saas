@@ -1,6 +1,6 @@
 package com.shipping.saas.shippingSaas.resource;
 
-import com.shipping.saas.shippingSaas.domain.ClientUser;
+import com.shipping.saas.shippingSaas.domain.clients.ClientUser;
 import com.shipping.saas.shippingSaas.domain.dto.ClientUserDTO;
 import com.shipping.saas.shippingSaas.service.impl.ClientUserServiceImpl;
 import lombok.AllArgsConstructor;

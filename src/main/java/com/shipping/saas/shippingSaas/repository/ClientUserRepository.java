@@ -1,6 +1,6 @@
 package com.shipping.saas.shippingSaas.repository;
 
-import com.shipping.saas.shippingSaas.domain.ClientUser;
+import com.shipping.saas.shippingSaas.domain.clients.ClientUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

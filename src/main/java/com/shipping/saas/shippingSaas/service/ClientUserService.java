@@ -1,6 +1,6 @@
 package com.shipping.saas.shippingSaas.service;
 
-import com.shipping.saas.shippingSaas.domain.ClientUser;
+import com.shipping.saas.shippingSaas.domain.clients.ClientUser;
 import com.shipping.saas.shippingSaas.domain.dto.ClientUserDTO;
 
 import java.util.List;

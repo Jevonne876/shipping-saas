@@ -19,6 +19,8 @@ public class CustomUserDetails implements UserDetails {
     private final String password;
     private final Collection<? extends GrantedAuthority> authorities;
     private final String userType; // ✅ additional custom field
+    private final String clientCode;
+
 
 
 }

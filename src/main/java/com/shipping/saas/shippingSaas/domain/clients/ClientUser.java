@@ -1,9 +1,12 @@
-package com.shipping.saas.shippingSaas.domain;
+package com.shipping.saas.shippingSaas.domain.clients;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.shipping.saas.shippingSaas.domain.Role;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -37,15 +40,10 @@ public class ClientUser {
     @Column(unique = true, nullable = false)
     private String email;
 
-    @Column(nullable = false)
-    private String phoneNumber;
 
     @Column(nullable = false)
     @JsonIgnore
     private String passwordHash;
-
-    @Column(nullable = false)
-    private String userType;
 
     @ManyToOne
     @JoinColumn(name = "role_id")
@@ -57,6 +55,13 @@ public class ClientUser {
     @CreatedDate
     private Instant createdAt;
 
+    @CreatedBy
+    private String createdBy;
+
+
     @LastModifiedDate
     private Instant updatedAt;
+
+    @LastModifiedBy
+    private String updatedBy;
 }

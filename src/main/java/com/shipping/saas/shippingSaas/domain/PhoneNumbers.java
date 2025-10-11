@@ -1,7 +1,5 @@
 package com.shipping.saas.shippingSaas.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.shipping.saas.shippingSaas.domain.clients.ClientCustomer;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedBy;
@@ -11,51 +9,53 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.Instant;
-import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name = "customers")
+@Table(name = "phone_numbers")
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @EntityListeners(AuditingEntityListener.class)
-public class Customers {
+public class PhoneNumbers {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(nullable = false)
-    private String firstName;
+    @Column(name = "owner_id",nullable = false)
+    private UUID ownerId;
 
-    @Column(nullable = false)
-    private String lastName;
+    @Column(name = "owner_type",nullable = false)
+    private String ownerType;
 
-    @Column(nullable = false)
-    private String email;
+    @Column(name = "phone_number")
+    private String phoneNumber;
 
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
-    private List<ClientCustomer> clientCustomers;
+    @Column(name = "phone_type")
+    private String phoneType;
 
-
-    @Column(nullable = false)
-    @JsonIgnore
-    private String passwordHash;
+    @Column(name = "is_active")
+    @Builder.Default
+    private Boolean isActive = true;
 
     @CreatedDate
+
+    @Column(name = "created_at")
     private Instant createdAt;
 
     @CreatedBy
+    @Column(name = "created_by", nullable = false)
     private String createdBy;
 
     @LastModifiedDate
+    @Column(name = "updated_at")
     private Instant updatedAt;
 
+    @Column(name = "updated_by", nullable = false)
     @LastModifiedBy
     private String updatedBy;
 }
-
-

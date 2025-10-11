@@ -1,9 +1,12 @@
-package com.shipping.saas.shippingSaas.domain;
+package com.shipping.saas.shippingSaas.domain.clients;
 
-
+import com.shipping.saas.shippingSaas.domain.Customers;
+import com.shipping.saas.shippingSaas.domain.WarehouseAddress;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -11,12 +14,7 @@ import java.time.Instant;
 import java.util.UUID;
 
 @Entity
-@Table(
-    name = "client_customers",
-    uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"client_id", "customer_id"}),
-        @UniqueConstraint(columnNames = {"suite_code"})
-    })
+@Table(name = "client_customers")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -26,6 +24,7 @@ import java.util.UUID;
 public class ClientCustomer {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -36,31 +35,22 @@ public class ClientCustomer {
     @JoinColumn(name = "customer_id", nullable = false)
     private Customers customer;
 
-    @Column(name = "suite_code", nullable = false, unique = true)
-    private String suiteCode;
-
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "pickup_location_id")
-    private PickUpLocation pickupLocation;
+    @JoinColumn(name = "warehouse_id", nullable = false)
+    private WarehouseAddress warehouse;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "warehouse_address_id")
-    private WarehouseAddress warehouseAddress;
 
-    @Column(name = "user_type", nullable = false)
-    private String userType;
-
-    @Column(name = "is_active")
-    @Builder.Default
-    private Boolean isActive = true;
+    private String status = "active";
 
     @CreatedDate
-    @Column(name = "created_at", updatable = false)
     private Instant createdAt;
 
+    @CreatedBy
+    private String createdBy;
+
     @LastModifiedDate
-    @Column(name = "updated_at")
     private Instant updatedAt;
 
-
+    @LastModifiedBy
+    private String updatedBy;
 }

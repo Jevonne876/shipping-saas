@@ -25,12 +25,13 @@ public class JwtUtil {
     }
 
 
-    public String generateToken(String email, String role,String userType) {
+    public String generateToken(String email, String role,String userType, String clientCode) {
 
         return Jwts.builder()
             .subject(email)
             .claim("role", role)
             .claim("userType", userType)
+            .claim("clientCode",clientCode)
             .issuedAt(new Date())
             .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
             .signWith(secretKey)
@@ -83,4 +84,15 @@ public class JwtUtil {
             .getExpiration();
         return expiration.before(new Date());
     }
+
+    public String extractClientCode(String token) {
+        Claims claims = Jwts.parser()
+            .verifyWith(secretKey)
+            .build()
+            .parseSignedClaims(token)
+            .getPayload();
+
+        return claims.get("clientCode", String.class);
+    }
+
 }

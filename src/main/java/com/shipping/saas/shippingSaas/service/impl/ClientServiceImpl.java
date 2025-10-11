@@ -1,6 +1,6 @@
 package com.shipping.saas.shippingSaas.service.impl;
 
-import com.shipping.saas.shippingSaas.domain.Client;
+import com.shipping.saas.shippingSaas.domain.clients.Client;
 import com.shipping.saas.shippingSaas.exceptions.DuplicateResourceException;
 import com.shipping.saas.shippingSaas.exceptions.PlatformUserNotFoundException;
 import com.shipping.saas.shippingSaas.repository.ClientRepository;
@@ -26,15 +26,6 @@ public class ClientServiceImpl implements ClientService {
         Client newClient = Client.builder()
             .name(client.getName())
             .email(client.getEmail())
-            .phoneNumber(client.getPhoneNumber())
-            .companyCode(client.getCompanyCode())
-            .subscriptionPlan(client.getSubscriptionPlan())
-            .logoUrl(client.getLogoUrl())
-            .streetAddress(client.getStreetAddress())
-            .city(client.getCity())
-            .state(client.getState())
-            .country(client.getCountry())
-            .postalCode(client.getPostalCode())
             .build();
 
         return clientRepository.save(newClient);
@@ -55,21 +46,12 @@ public class ClientServiceImpl implements ClientService {
         }
 
         //checks if phone number already exists
-        if (clientRepository.existsByPhoneNumberAndIdNot(client.getPhoneNumber(), clientId)) {
-            throw new DuplicateResourceException("client with id " + clientId + " already exists");
-        }
+//        if (clientRepository.existsByPhoneNumberAndIdNot(client.getPhoneNumber(), clientId)) {
+//            throw new DuplicateResourceException("client with id " + clientId + " already exists");
+//        }
 
         savedClient.setName(client.getName());
         savedClient.setEmail(client.getEmail());
-        savedClient.setPhoneNumber(client.getPhoneNumber());
-        savedClient.setCompanyCode(client.getCompanyCode());
-        savedClient.setSubscriptionPlan(client.getSubscriptionPlan());
-        savedClient.setLogoUrl(client.getLogoUrl());
-        savedClient.setStreetAddress(client.getStreetAddress());
-        savedClient.setCity(client.getCity());
-        savedClient.setState(client.getState());
-        savedClient.setCountry(client.getCountry());
-        savedClient.setPostalCode(client.getPostalCode());
         return clientRepository.save(savedClient);
 
     }
@@ -94,7 +76,7 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public void deleteById(UUID clientId) {
-        
+
 
     }
 }

@@ -6,8 +6,9 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 import java.util.TimeZone;
 
-@EnableJpaAuditing
+
 @SpringBootApplication
+@EnableJpaAuditing(auditorAwareRef = "auditorAware")
 public class ShippingSaasApplication {
 
     public static void main(String[] args) {

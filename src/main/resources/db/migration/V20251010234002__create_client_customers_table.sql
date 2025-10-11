@@ -19,3 +19,4 @@ CREATE TABLE client_customers
 
 CREATE INDEX idx_client_customers_client_id ON client_customers (client_id);
 CREATE INDEX idx_client_customers_customer_id ON client_customers (customer_id);
+

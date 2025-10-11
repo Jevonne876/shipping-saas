@@ -1,6 +1,7 @@
 package com.shipping.saas.shippingSaas.domain.clients;
 
 import com.shipping.saas.shippingSaas.domain.Customers;
+import com.shipping.saas.shippingSaas.domain.Store;
 import com.shipping.saas.shippingSaas.domain.WarehouseAddress;
 import jakarta.persistence.*;
 import lombok.*;
@@ -38,6 +39,12 @@ public class ClientCustomer {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "warehouse_id", nullable = false)
     private WarehouseAddress warehouse;
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "store_id", nullable = false)
+    private Store store;
+
 
 
     private String status = "active";

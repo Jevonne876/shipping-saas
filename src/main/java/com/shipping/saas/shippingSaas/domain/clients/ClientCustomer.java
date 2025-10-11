@@ -45,8 +45,6 @@ public class ClientCustomer {
     @JoinColumn(name = "store_id", nullable = false)
     private Store store;
 
-
-
     private String status = "active";
 
     @CreatedDate

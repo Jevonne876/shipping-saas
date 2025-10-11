@@ -22,7 +22,6 @@ import java.util.UUID;
 @EntityListeners(AuditingEntityListener.class)
 public class Addresses {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;

@@ -12,7 +12,7 @@ public interface AddressesService {
 
     Addresses updateAddresses(Addresses addresses);
 
-    List<Addresses> findAddressesByOwnerId(UUID ownerId);
+    List<Addresses> findAddressesByAddressableId(UUID ownerId);
 
     Optional<Addresses> findById(UUID addressesId);
 

@@ -66,11 +66,11 @@ public class AddressesServiceImpl implements AddressesService {
     }
 
     @Override
-    public List<Addresses> findAddressesByOwnerId(UUID ownerId) {
+    public List<Addresses> findAddressesByAddressableId(UUID ownerId) {
 
         log.info("finding addresses for owner {}", ownerId);
 
-        return addressesRepository.findAddressesByOwnerId(ownerId);
+        return addressesRepository.findAddressesByAddressableId(ownerId);
     }
 
     @Override

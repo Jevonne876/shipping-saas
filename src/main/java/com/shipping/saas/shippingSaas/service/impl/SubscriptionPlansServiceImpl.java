@@ -1,0 +1,47 @@
+package com.shipping.saas.shippingSaas.service.impl;
+
+import com.shipping.saas.shippingSaas.domain.clients.SubscriptionPlans;
+import com.shipping.saas.shippingSaas.repository.SubscriptionPlanRepository;
+import com.shipping.saas.shippingSaas.service.SubscriptionPlanService;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
+
+import java.util.List;
+import java.util.UUID;
+
+@Slf4j
+@Setter
+@RequiredArgsConstructor
+public class SubscriptionPlansServiceImpl implements SubscriptionPlanService {
+
+    private final SubscriptionPlanRepository subscriptionPlanRepository;
+
+
+    @Override
+    public SubscriptionPlans createSubscriptionPlans(SubscriptionPlans subscriptionPlans) {
+        log.info("creating subscription plans");
+
+        return subscriptionPlanRepository.save(subscriptionPlans);
+    }
+
+    @Override
+    public SubscriptionPlans updateSubscriptionPlans(SubscriptionPlans subscriptionPlans) {
+        return null;
+    }
+
+    @Override
+    public void deleteSubscriptionPlans(UUID subscriptionPlanId) {
+
+    }
+
+    @Override
+    public List<SubscriptionPlans> findAllSubscriptionPlans() {
+        return List.of();
+    }
+
+    @Override
+    public void deactivateSubscriptionPlans(UUID subscriptionPlanId) {
+
+    }
+}

@@ -22,6 +22,10 @@ public class WarehouseAddress {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    @Column(name = "name", nullable = false)
+    private String name;
+
+
     // 🔗 Each client has one warehouse address (or main hub)
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id", nullable = false, unique = true)

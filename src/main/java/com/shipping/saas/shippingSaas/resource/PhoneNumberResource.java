@@ -14,7 +14,7 @@ import static org.springframework.http.HttpStatus.*;
 @RequestMapping("/api/phone-number/")
 @Slf4j
 @RequiredArgsConstructor
-public class PhoneNumberController {
+public class PhoneNumberResource {
 
     private final PhoneNumberServiceImpl phoneNumberService;
 

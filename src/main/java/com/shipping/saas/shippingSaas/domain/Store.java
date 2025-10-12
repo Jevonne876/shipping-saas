@@ -31,13 +31,6 @@ public class Store {
     @Column(nullable = false)
     private String code; // e.g. "KNG", "MBJ"
 
-    private String label;
-    private String phone;
-    private String email;
-
-    @Column(name = "last_tracking_number")
-    private Long lastTrackingNumber = 0L;
-
     @Builder.Default
     private boolean isActive = true;
 

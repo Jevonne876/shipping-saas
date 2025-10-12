@@ -44,7 +44,6 @@ public class Client {
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<ClientCustomer> clientCustomers;
 
-
     @Builder.Default
     private boolean isActive = true;
 

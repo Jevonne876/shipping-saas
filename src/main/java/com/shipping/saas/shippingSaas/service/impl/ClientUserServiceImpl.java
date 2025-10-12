@@ -5,7 +5,6 @@ import com.shipping.saas.shippingSaas.domain.clients.ClientUser;
 import com.shipping.saas.shippingSaas.domain.CustomUserDetails;
 import com.shipping.saas.shippingSaas.domain.Role;
 import com.shipping.saas.shippingSaas.domain.dto.ClientUserDTO;
-import com.shipping.saas.shippingSaas.domain.dto.UserType;
 import com.shipping.saas.shippingSaas.repository.ClientRepository;
 import com.shipping.saas.shippingSaas.repository.ClientUserRepository;
 import com.shipping.saas.shippingSaas.repository.RoleRepository;

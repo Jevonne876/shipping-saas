@@ -3,7 +3,7 @@ package com.shipping.saas.shippingSaas.service.impl;
 import com.shipping.saas.shippingSaas.domain.PlatformUser;
 import com.shipping.saas.shippingSaas.domain.Role;
 import com.shipping.saas.shippingSaas.domain.dto.PlatformUserDTO;
-import com.shipping.saas.shippingSaas.domain.dto.UserType;
+import com.shipping.saas.shippingSaas.domain.enums.UserType;
 import com.shipping.saas.shippingSaas.exceptions.BadRequestException;
 import com.shipping.saas.shippingSaas.exceptions.DuplicateResourceException;
 import com.shipping.saas.shippingSaas.exceptions.PlatformUserNotFoundException;

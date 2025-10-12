@@ -1,4 +1,4 @@
-package com.shipping.saas.shippingSaas.domain.dto;
+package com.shipping.saas.shippingSaas.domain.enums;
 
 public enum UserType {
 

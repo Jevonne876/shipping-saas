@@ -13,7 +13,7 @@ CREATE TABLE client_subscriptions
 
   -- 💰 Optional billing/tracking
   price_at_signup      DECIMAL(10, 2),
-  billing_cycle        VARCHAR(20)      DEFAULT 'monthly', -- monthly, yearly, etc.
+  billing_cycle        VARCHAR(20)      DEFAULT 'MONTHLY', -- monthly, yearly, etc.
   notes                TEXT,
 
   -- 🧾 Audit

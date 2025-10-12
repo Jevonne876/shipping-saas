@@ -1,5 +1,7 @@
 package com.shipping.saas.shippingSaas.domain;
 
+import com.shipping.saas.shippingSaas.domain.enums.OwnerType;
+import com.shipping.saas.shippingSaas.domain.enums.PhoneType;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedBy;
@@ -26,24 +28,25 @@ public class PhoneNumbers {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(name = "owner_id",nullable = false)
+    @Column(name = "owner_id", nullable = false)
     private UUID ownerId;
 
-    @Column(name = "owner_type",nullable = false)
-    private String ownerType;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "owner_type", nullable = false)
+    private OwnerType ownerType;
 
     @Column(name = "phone_number")
     private String phoneNumber;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "phone_type")
-    private String phoneType;
+    private PhoneType phoneType;
 
     @Column(name = "is_active")
     @Builder.Default
     private Boolean isActive = true;
 
     @CreatedDate
-
     @Column(name = "created_at")
     private Instant createdAt;
 

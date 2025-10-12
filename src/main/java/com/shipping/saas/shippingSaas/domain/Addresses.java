@@ -1,5 +1,6 @@
 package com.shipping.saas.shippingSaas.domain;
 
+import com.shipping.saas.shippingSaas.domain.enums.AddressableType;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedBy;
@@ -29,8 +30,9 @@ public class Addresses {
     @Column(name = "addressable_id", nullable = false)
     private UUID addressableId;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "addressable_type", nullable = false)
-    private String addressableType;
+    private AddressableType addressableType;
 
     @Column(name = "street_address")
     private String streetAddress;

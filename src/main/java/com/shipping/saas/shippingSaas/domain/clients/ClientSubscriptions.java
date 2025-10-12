@@ -1,5 +1,6 @@
 package com.shipping.saas.shippingSaas.domain.clients;
 
+import com.shipping.saas.shippingSaas.domain.enums.BillingCycle;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
@@ -45,8 +46,9 @@ public class ClientSubscriptions {
     @Column(name = "is_active")
     private boolean isActive = true;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "billing_cycle")
-    private String billingCycle;
+    private BillingCycle billingCycle;
 
     @Column(name = "notes", nullable = true)
     private String notes;

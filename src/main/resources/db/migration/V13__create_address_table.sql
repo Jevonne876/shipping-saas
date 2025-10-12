@@ -4,7 +4,8 @@ CREATE TABLE addresses
 
   -- Polymorphic owner reference
   addressable_id   UUID         NOT NULL,
-  addressable_type VARCHAR(50)  NOT NULL CHECK (addressable_type IN ('CLIENT', 'CUSTOMER', 'STAFF', 'WAREHOUSE')),
+  addressable_type VARCHAR(50)  NOT NULL CHECK (addressable_type IN
+                                                ('CLIENT', 'CUSTOMER', 'STAFF', 'STORE', 'WAREHOUSE')),
 
   -- Address details
   street_address   VARCHAR(255) NOT NULL,

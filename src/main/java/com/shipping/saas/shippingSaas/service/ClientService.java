@@ -1,6 +1,7 @@
 package com.shipping.saas.shippingSaas.service;
 
 import com.shipping.saas.shippingSaas.domain.clients.Client;
+import com.shipping.saas.shippingSaas.domain.dto.ClientDTO;
 
 import java.util.List;
 import java.util.UUID;
@@ -8,15 +9,15 @@ import java.util.UUID;
 public interface ClientService {
 
 
-    Client create(Client client);
+    ClientDTO create(ClientDTO dto);
 
-    Client update(UUID clientId, Client client);
+    ClientDTO update(UUID clientId, ClientDTO dto);
 
-    Client findById(UUID clientId);
+    ClientDTO findById(UUID clientId);
 
-    Client findByName(String name);
+    ClientDTO findByName(String name);
 
-    List<Client> findAll();
+    List<ClientDTO> findAll();
 
     void deleteById(UUID clientId);
 

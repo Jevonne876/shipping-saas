@@ -1,6 +1,7 @@
 package com.shipping.saas.shippingSaas.resource;
 
 import com.shipping.saas.shippingSaas.domain.clients.Client;
+import com.shipping.saas.shippingSaas.domain.dto.ClientDTO;
 import com.shipping.saas.shippingSaas.service.impl.ClientServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +31,7 @@ public class ClientResource {
      * @return the response entity
      */
     @PostMapping("")
-    public ResponseEntity createClient(@RequestBody Client client) {
+    public ResponseEntity<ClientDTO> createClient(@RequestBody ClientDTO client) {
 
         return new ResponseEntity(clientService.create(client), CREATED);
     }
@@ -42,13 +43,13 @@ public class ClientResource {
      * @return the all clients
      */
     @GetMapping("")
-    public ResponseEntity<List<Client>> getAllClients() {
+    public ResponseEntity<List<ClientDTO>> getAllClients() {
 
         return new ResponseEntity<>(clientService.findAll(), OK);
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Client> getClientById(@PathVariable UUID id) {
+    public ResponseEntity<ClientDTO> getClientById(@PathVariable UUID id) {
         return new ResponseEntity<>(clientService.findById(id), OK);
     }
 

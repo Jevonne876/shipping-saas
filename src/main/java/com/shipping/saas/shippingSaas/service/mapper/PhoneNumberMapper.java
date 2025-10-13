@@ -5,10 +5,8 @@ import com.shipping.saas.shippingSaas.domain.dto.PhoneNumberDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(componentModel = "string")
+@Mapper(componentModel = "spring")
 public interface PhoneNumberMapper {
-
-    PhoneNumberMapper INSTANCE = Mappers.getMapper(PhoneNumberMapper.class);
 
     PhoneNumberDTO toDto(PhoneNumbers phoneNumber);
 

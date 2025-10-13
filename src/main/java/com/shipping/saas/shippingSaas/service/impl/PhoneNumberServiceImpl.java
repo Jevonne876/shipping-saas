@@ -1,8 +1,10 @@
 package com.shipping.saas.shippingSaas.service.impl;
 
 import com.shipping.saas.shippingSaas.domain.PhoneNumbers;
+import com.shipping.saas.shippingSaas.domain.dto.PhoneNumberDTO;
 import com.shipping.saas.shippingSaas.repository.PhoneNumberRepository;
 import com.shipping.saas.shippingSaas.service.PhoneNumbersService;
+import com.shipping.saas.shippingSaas.service.mapper.PhoneNumberMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
@@ -19,23 +21,20 @@ import java.util.UUID;
 public class PhoneNumberServiceImpl implements PhoneNumbersService {
 
     private final PhoneNumberRepository phoneNumberRepository;
+    private final PhoneNumberMapper phoneNumberMapper;
 
     @Override
-    public PhoneNumbers createPhoneNumbers(PhoneNumbers phoneNumbers) {
+    public PhoneNumberDTO createPhoneNumbers(PhoneNumberDTO phoneNumbers) {
 
         log.info("creating phone numbers for {} type {}", phoneNumbers.getOwnerId(), phoneNumbers.getPhoneType());
 
-        PhoneNumbers newPhoneNumbers = PhoneNumbers.builder()
-            .ownerId(phoneNumbers.getOwnerId())
-            .phoneType(phoneNumbers.getPhoneType())
-            .phoneNumber(phoneNumbers.getPhoneNumber())
-            .build();
+        PhoneNumbers phoneNumber = phoneNumberMapper.toEntity(phoneNumbers);
 
-        return phoneNumberRepository.save(newPhoneNumbers);
+        return phoneNumberMapper.toDto(phoneNumberRepository.save(phoneNumber));
     }
 
     @Override
-    public PhoneNumbers updatePhoneNumbers(PhoneNumbers phoneNumbers) {
+    public PhoneNumberDTO updatePhoneNumbers(PhoneNumberDTO phoneNumbers) {
 
         log.info("updating phone number for {} type {}", phoneNumbers.getOwnerId(), phoneNumbers.getPhoneType());
 
@@ -43,23 +42,28 @@ public class PhoneNumberServiceImpl implements PhoneNumbersService {
         update.setPhoneType(phoneNumbers.getPhoneType());
         update.setPhoneNumber(phoneNumbers.getPhoneNumber());
 
-        return phoneNumberRepository.save(update);
+        return phoneNumberMapper.toDto(phoneNumberRepository.save(update));
     }
 
     @Override
-    public Optional<PhoneNumbers> findById(UUID phoneNumbersId) {
+    public Optional<PhoneNumberDTO> findById(UUID phoneNumbersId) {
         log.info("finding phone number for {} type {}", phoneNumbersId, phoneNumbersId);
-        PhoneNumbers phoneNumbers = phoneNumberRepository.findById(phoneNumbersId)
-            .orElseThrow(() -> new IllegalArgumentException("phone number not found" + phoneNumbersId));
 
-        return Optional.ofNullable(phoneNumbers);
+
+        return Optional.of(phoneNumberMapper
+            .toDto(phoneNumberRepository
+                .findById(phoneNumbersId)
+                .orElseThrow(() -> new IllegalArgumentException("phone number not found" + phoneNumbersId))));
     }
 
     @Override
-    public List<PhoneNumbers> findPhoneNumbersByOwnerId(UUID ownerId) {
+    public List<PhoneNumberDTO> findPhoneNumbersByOwnerId(UUID ownerId) {
 
         log.info("finding phone numbers for {}", ownerId);
 
-        return phoneNumberRepository.findByOwnerId(ownerId);
+        return phoneNumberRepository.findByOwnerId(ownerId)
+            .stream()
+            .map(phoneNumberMapper::toDto)
+            .toList();
     }
 }

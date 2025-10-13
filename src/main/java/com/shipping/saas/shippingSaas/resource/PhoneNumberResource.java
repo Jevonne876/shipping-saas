@@ -1,14 +1,15 @@
 package com.shipping.saas.shippingSaas.resource;
 
 
-import com.shipping.saas.shippingSaas.domain.PhoneNumbers;
+import com.shipping.saas.shippingSaas.domain.dto.PhoneNumberDTO;
 import com.shipping.saas.shippingSaas.service.impl.PhoneNumberServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import static org.springframework.http.HttpStatus.*;
+import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.OK;
 
 @RestController
 @RequestMapping("/api/phone-number/")
@@ -19,17 +20,17 @@ public class PhoneNumberResource {
     private final PhoneNumberServiceImpl phoneNumberService;
 
     @PostMapping
-    public ResponseEntity<PhoneNumbers> create(@RequestBody PhoneNumbers phoneNumbers) {
+    public ResponseEntity<PhoneNumberDTO> create(@RequestBody PhoneNumberDTO phoneNumber) {
 
-        log.info("creating phone number {}", phoneNumbers);
+        log.info("creating phone number {}", phoneNumber);
 
-        return new ResponseEntity<>(phoneNumberService.createPhoneNumbers(phoneNumbers), CREATED);
+        return new ResponseEntity<>(phoneNumberService.createPhoneNumbers(phoneNumber), CREATED);
     }
 
     @PutMapping
-    public ResponseEntity<PhoneNumbers> update(@RequestBody PhoneNumbers phoneNumbers) {
-        log.info("updating phone number {}", phoneNumbers);
-        return new ResponseEntity<>(phoneNumberService.updatePhoneNumbers(phoneNumbers), OK);
+    public ResponseEntity<PhoneNumberDTO> update(@RequestBody PhoneNumberDTO phoneNumber) {
+        log.info("updating phone number {}", phoneNumber);
+        return new ResponseEntity<>(phoneNumberService.updatePhoneNumbers(phoneNumber), OK);
     }
 
 

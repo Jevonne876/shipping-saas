@@ -1,4 +1,4 @@
-package com.shipping.saas.shippingSaas.service.impl.mapper;
+package com.shipping.saas.shippingSaas.service.mapper;
 
 import com.shipping.saas.shippingSaas.domain.Addresses;
 import com.shipping.saas.shippingSaas.domain.dto.AddressesDTO;

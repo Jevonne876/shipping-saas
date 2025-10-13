@@ -11,5 +11,6 @@ import java.util.UUID;
 public interface ClientSubscriptionsRepository extends JpaRepository<ClientSubscriptions, UUID> {
 
     List<ClientSubscriptions> findByClientId(UUID clientId);
+
     List<ClientSubscriptions> findByIsActiveTrue();
 }

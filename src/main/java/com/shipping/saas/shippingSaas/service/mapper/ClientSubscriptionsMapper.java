@@ -1,4 +1,4 @@
-package com.shipping.saas.shippingSaas.service.impl.mapper;
+package com.shipping.saas.shippingSaas.service.mapper;
 
 import com.shipping.saas.shippingSaas.domain.clients.ClientSubscriptions;
 import com.shipping.saas.shippingSaas.domain.dto.ClientSubscriptionsDTO;
@@ -6,10 +6,9 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 @Mapper(
-    componentModel = "spring",
-    uses = {SubscriptionPlanMapper.class}
-)
+    componentModel = "spring")
 public interface ClientSubscriptionsMapper {
+
 
     // 🔄 Entity → DTO
     @Mapping(source = "client.id", target = "clientId")

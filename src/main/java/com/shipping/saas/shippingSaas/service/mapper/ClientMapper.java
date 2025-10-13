@@ -1,4 +1,4 @@
-package com.shipping.saas.shippingSaas.service.impl.mapper;
+package com.shipping.saas.shippingSaas.service.mapper;
 
 import com.shipping.saas.shippingSaas.domain.clients.Client;
 import com.shipping.saas.shippingSaas.domain.clients.ClientSubscriptions;
@@ -15,14 +15,14 @@ import org.mapstruct.factory.Mappers;
 })
 public interface ClientMapper {
 
-    ClientMapper INSTANCE = Mappers.getMapper(ClientMapper.class);
 
-    @Mapping(target = "subscription", expression = "java(getActiveSubscriptionName(client))")
+
+    @Mapping(target = "subscriptionPlan", expression = "java(getActiveSubscriptionName(client))")
     ClientDTO toDto(Client client);
 
     // DTO → Entity
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "clientSubscriptions", ignore = true)
+    @Mapping(target = "subscriptions", ignore = true)
     // handled elsewhere
     // id is usually generated
     Client toEntity(ClientDTO dto);

@@ -1,6 +1,7 @@
 package com.shipping.saas.shippingSaas.service;
 
 import com.shipping.saas.shippingSaas.domain.Addresses;
+import com.shipping.saas.shippingSaas.domain.dto.AddressesDTO;
 
 import java.util.List;
 import java.util.Optional;
@@ -8,13 +9,13 @@ import java.util.UUID;
 
 public interface AddressesService {
 
-    Addresses createAddresses(Addresses addresses);
+    AddressesDTO createAddresses(AddressesDTO addresses);
 
-    Addresses updateAddresses(Addresses addresses);
+    AddressesDTO updateAddresses(AddressesDTO addresses);
 
-    List<Addresses> findAddressesByAddressableId(UUID ownerId);
+    List<AddressesDTO> findAddressesByAddressableId(UUID ownerId);
 
-    Optional<Addresses> findById(UUID addressesId);
+    Optional<AddressesDTO> findById(UUID addressesId);
 
     void deleteAddresses(UUID id);
 

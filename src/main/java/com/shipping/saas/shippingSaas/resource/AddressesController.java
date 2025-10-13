@@ -1,6 +1,8 @@
 package com.shipping.saas.shippingSaas.resource;
 
+
 import com.shipping.saas.shippingSaas.domain.Addresses;
+import com.shipping.saas.shippingSaas.domain.dto.AddressesDTO;
 import com.shipping.saas.shippingSaas.service.impl.AddressesServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +25,7 @@ public class AddressesController {
     private final AddressesServiceImpl addressesService;
 
     @PostMapping
-    public ResponseEntity<Addresses> saveAddress(@RequestBody Addresses addresses) {
+    public ResponseEntity<AddressesDTO> saveAddress(@RequestBody AddressesDTO addresses) {
 
         log.info("saving address {}", addresses);
 
@@ -31,18 +33,17 @@ public class AddressesController {
     }
 
     @PostMapping("update")
-    public ResponseEntity<Addresses> updateAddress(@RequestBody Addresses addresses) {
+    public ResponseEntity<AddressesDTO> updateAddress(@RequestBody AddressesDTO addresses) {
         log.info("updating address {}", addresses);
         return new ResponseEntity<>(addressesService.updateAddresses(addresses), OK);
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Optional<Addresses>> findAddressById(@PathVariable UUID id) {
+    public ResponseEntity<Optional<AddressesDTO>> findAddressById(@PathVariable UUID id) {
         log.info("finding address by id {}", id);
 
         return new ResponseEntity<>(addressesService.findById(id), OK);
     }
-
 
 
 }

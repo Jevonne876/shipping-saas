@@ -1,11 +1,14 @@
 package com.shipping.saas.shippingSaas.service.impl;
 
 import com.shipping.saas.shippingSaas.domain.Addresses;
+import com.shipping.saas.shippingSaas.domain.dto.AddressesDTO;
 import com.shipping.saas.shippingSaas.repository.AddressesRepository;
 import com.shipping.saas.shippingSaas.service.AddressesService;
+import com.shipping.saas.shippingSaas.service.mapper.AddressesMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,30 +17,24 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 @Slf4j
+@Transactional
 public class AddressesServiceImpl implements AddressesService {
 
     private final AddressesRepository addressesRepository;
+    private final AddressesMapper addressesMapper;
 
     @Override
-    public Addresses createAddresses(Addresses addresses) {
+    public AddressesDTO createAddresses(AddressesDTO addresses) {
 
         log.info("creating new address for owner {} address type {}", addresses.getAddressableId(), addresses.getAddressableType());
 
-        Addresses newAddresses = Addresses.builder()
-            .addressableId(addresses.getAddressableId())
-            .addressableType(addresses.getAddressableType())
-            .streetAddress(addresses.getStreetAddress())
-            .stateOrParish(addresses.getStateOrParish())
-            .city(addresses.getCity())
-            .postalCode(addresses.getPostalCode())
-            .country(addresses.getCountry())
-            .build();
+        Addresses addressesEntity = addressesMapper.toEntity(addresses);
 
-        return addressesRepository.save(newAddresses);
+        return addressesMapper.toDto(addressesRepository.save(addressesEntity));
     }
 
     @Override
-    public Addresses updateAddresses(Addresses addresses) {
+    public AddressesDTO updateAddresses(AddressesDTO addresses) {
 
         log.info("updating address for owner {}", addresses.getAddressableId());
 
@@ -51,26 +48,30 @@ public class AddressesServiceImpl implements AddressesService {
         updatedAddresses.setPostalCode(addresses.getPostalCode());
         updatedAddresses.setCountry(addresses.getCountry());
 
-
-        return addressesRepository.save(updatedAddresses);
+        return addressesMapper.toDto(addressesRepository.save(updatedAddresses));
     }
 
     @Override
-    public Optional<Addresses> findById(UUID addressesId) {
+    public Optional<AddressesDTO> findById(UUID addressesId) {
 
         log.info("finding address by id {}", addressesId);
 
-        Addresses addresses = addressesRepository.findById(addressesId).orElseThrow(() -> new IllegalArgumentException("address id not found " + addressesId));
-
-        return Optional.of(addresses);
+        return Optional.of(
+            addressesMapper
+                .toDto(addressesRepository
+                    .findById(addressesId)
+                    .orElseThrow(() -> new IllegalArgumentException("address id not found " + addressesId))));
     }
 
     @Override
-    public List<Addresses> findAddressesByAddressableId(UUID ownerId) {
+    public List<AddressesDTO> findAddressesByAddressableId(UUID ownerId) {
 
         log.info("finding addresses for owner {}", ownerId);
 
-        return addressesRepository.findAddressesByAddressableId(ownerId);
+        return addressesRepository
+            .findAddressesByAddressableId(ownerId)
+            .stream()
+            .map(addressesMapper::toDto).toList();
     }
 
     @Override

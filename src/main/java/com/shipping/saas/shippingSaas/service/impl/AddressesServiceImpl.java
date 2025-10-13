@@ -52,6 +52,7 @@ public class AddressesServiceImpl implements AddressesService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<AddressesDTO> findById(UUID addressesId) {
 
         log.info("finding address by id {}", addressesId);
@@ -64,6 +65,7 @@ public class AddressesServiceImpl implements AddressesService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<AddressesDTO> findAddressesByAddressableId(UUID ownerId) {
 
         log.info("finding addresses for owner {}", ownerId);

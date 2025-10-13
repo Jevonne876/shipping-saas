@@ -6,6 +6,7 @@ import com.shipping.saas.shippingSaas.service.SubscriptionPlanService;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
@@ -13,6 +14,7 @@ import java.util.UUID;
 @Slf4j
 @Setter
 @RequiredArgsConstructor
+@Transactional
 public class SubscriptionPlansServiceImpl implements SubscriptionPlanService {
 
     private final SubscriptionPlanRepository subscriptionPlanRepository;
@@ -36,6 +38,7 @@ public class SubscriptionPlansServiceImpl implements SubscriptionPlanService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<SubscriptionPlans> findAllSubscriptionPlans() {
         return List.of();
     }

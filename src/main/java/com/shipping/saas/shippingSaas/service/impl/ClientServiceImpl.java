@@ -21,10 +21,8 @@ import java.util.UUID;
 @Transactional
 public class ClientServiceImpl implements ClientService {
 
-
     private final ClientRepository clientRepository;
     private final ClientMapper clientMapper;
-
 
     @Override
     public ClientDTO create(ClientDTO dto) {
@@ -36,7 +34,6 @@ public class ClientServiceImpl implements ClientService {
 
         return clientDTO;
     }
-
 
     @Override
     public ClientDTO update(UUID clientId, ClientDTO dto) {
@@ -66,6 +63,7 @@ public class ClientServiceImpl implements ClientService {
 
 
     @Override
+    @Transactional(readOnly = true)
     public ClientDTO findById(UUID clientId) {
         log.info("Fetching client with id {}", clientId);
 
@@ -79,6 +77,7 @@ public class ClientServiceImpl implements ClientService {
 
 
     @Override
+    @Transactional(readOnly = true)
     public ClientDTO findByName(String name) {
 
         log.info("Fetching client with name {}", name);
@@ -91,6 +90,7 @@ public class ClientServiceImpl implements ClientService {
 
 
     @Override
+    @Transactional(readOnly = true)
     public List<ClientDTO> findAll() {
         log.info("Fetching all clients");
 
@@ -100,9 +100,9 @@ public class ClientServiceImpl implements ClientService {
             .toList();
     }
 
+    //Todo
     @Override
     public void deleteById(UUID clientId) {
-
 
     }
 }

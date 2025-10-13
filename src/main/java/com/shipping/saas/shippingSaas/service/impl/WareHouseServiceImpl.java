@@ -1,11 +1,14 @@
 package com.shipping.saas.shippingSaas.service.impl;
 
 import com.shipping.saas.shippingSaas.domain.WarehouseAddress;
+import com.shipping.saas.shippingSaas.domain.dto.WarehouseAddressDTO;
 import com.shipping.saas.shippingSaas.repository.WarehouseRepository;
 import com.shipping.saas.shippingSaas.service.WareHouseService;
+import com.shipping.saas.shippingSaas.service.mapper.WarehouseAddressMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,51 +17,65 @@ import java.util.UUID;
 @Service
 @Slf4j
 @RequiredArgsConstructor
+@Transactional
 public class WareHouseServiceImpl implements WareHouseService {
 
     private final WarehouseRepository warehouseRepository;
+    private final WarehouseAddressMapper warehouseAddressMapper;
 
     @Override
-    public WarehouseAddress create(WarehouseAddress warehouseAddress) {
+    public WarehouseAddressDTO create(WarehouseAddressDTO warehouseAddress) {
+
         log.info("create warehouse address for client {}", warehouseAddress.getClient().getId());
 
-        WarehouseAddress address = WarehouseAddress.builder()
-            .name(warehouseAddress.getName())
-            .client(warehouseAddress.getClient())
-            .label(warehouseAddress.getLabel())
-            .clientCustomers(warehouseAddress.getClientCustomers())
-            .build();
-        return warehouseRepository.save(address);
+        WarehouseAddress address = warehouseAddressMapper.toEntity(warehouseAddress);
+
+        return warehouseAddressMapper.toDto(warehouseRepository.save(address));
     }
 
     @Override
-    public WarehouseAddress update(WarehouseAddress warehouseAddress) {
+    public WarehouseAddressDTO update(WarehouseAddressDTO warehouseAddress) {
+
         log.info("update warehouse address for client {}", warehouseAddress.getClient().getId());
-        Optional<WarehouseAddress> address = findByClientId(warehouseAddress.getClient().getId());
+
+        Optional<WarehouseAddressDTO> address = findByClientId(UUID.fromString(warehouseAddress.getClient().getId()));
+
         if (address.isPresent()) {
             address.get().setName(warehouseAddress.getName());
-            address.get().setLabel(warehouseAddress.getLabel());
-            address.get().setClientCustomers(warehouseAddress.getClientCustomers());
-
         }
-        return warehouseRepository.save(address.get());
+        WarehouseAddress update = warehouseAddressMapper.toEntity(warehouseAddress);
+
+        return warehouseAddressMapper.toDto(warehouseRepository.save(update));
     }
 
     @Override
-    public Optional<WarehouseAddress> findById(UUID id) {
+    @Transactional(readOnly = true)
+    public Optional<WarehouseAddressDTO> findById(UUID id) {
+
         log.info("find warehouse address for client {}", id);
+
         Optional<WarehouseAddress> address = warehouseRepository.findById(id);
-        return Optional.ofNullable(address.get());
+
+        return Optional.of(warehouseAddressMapper.toDto(address.get()));
     }
 
     @Override
-    public Optional<WarehouseAddress> findByClientId(UUID id) {
-        WarehouseAddress warehouseAddress = warehouseRepository.findByClientId(id).orElseThrow(() -> new RuntimeException("warehouse address not found"));
-        return Optional.of(warehouseAddress);
+    @Transactional(readOnly = true)
+    public Optional<WarehouseAddressDTO> findByClientId(UUID id) {
+
+        return Optional.of(warehouseAddressMapper
+            .toDto(warehouseRepository.findByClientId(id)
+                .orElseThrow(
+                    () -> new RuntimeException("warehouse address not found"))));
     }
 
     @Override
-    public List<WarehouseAddress> findAll() {
-        return warehouseRepository.findAll();
+    @Transactional(readOnly = true)
+    public List<WarehouseAddressDTO> findAll() {
+        return warehouseRepository
+            .findAll()
+            .stream()
+            .map(warehouseAddressMapper::toDto)
+            .toList();
     }
 }

@@ -81,6 +81,8 @@ public class ClientSubscriptionServiceImpl implements ClientSubscriptionService 
     /**
      * 🔹 Get all subscriptions for a client
      */
+    @Override
+    @Transactional(readOnly = true)
     public List<ClientSubscriptionsDTO> findByClientId(UUID clientId) {
         List<ClientSubscriptions> list = clientSubscriptionsRepository.findByClientId(clientId);
         return list.stream()
@@ -91,6 +93,8 @@ public class ClientSubscriptionServiceImpl implements ClientSubscriptionService 
     /**
      * 🔹 Deactivate a subscription manually (optional)
      */
+    @Override
+    @Transactional(readOnly = true)
     public ClientSubscriptionsDTO deactivate(UUID id) {
         ClientSubscriptions sub = clientSubscriptionsRepository.findById(id)
             .orElseThrow(() -> new IllegalArgumentException("Subscription not found"));

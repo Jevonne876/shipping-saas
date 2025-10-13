@@ -1,11 +1,9 @@
 package com.shipping.saas.shippingSaas.resource;
 
-import com.shipping.saas.shippingSaas.domain.Store;
+import com.shipping.saas.shippingSaas.domain.dto.StoreDTO;
 import com.shipping.saas.shippingSaas.service.impl.StoreServiceImpl;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,7 +22,7 @@ public class StoreResource {
 
 
     @PostMapping
-    public ResponseEntity<Store> save(@RequestBody Store store) {
+    public ResponseEntity<StoreDTO> save(@RequestBody StoreDTO store) {
 
         log.info("saving store for client {}", store);
 
@@ -32,19 +30,19 @@ public class StoreResource {
     }
 
     @PutMapping("update")
-    public ResponseEntity<Store> update(@RequestBody Store store) {
+    public ResponseEntity<StoreDTO> update(@RequestBody StoreDTO store) {
         log.info("updating store for client {}", store);
         return new ResponseEntity<>(storeService.update(store), OK);
     }
 
     @GetMapping
-    public ResponseEntity<List<Store>> findAll() {
+    public ResponseEntity<List<StoreDTO>> findAll() {
         log.info("find all stores");
         return new ResponseEntity<>(storeService.findAll(), OK);
     }
 
     @GetMapping("client/{client}")
-    public ResponseEntity<List<Store>> findByClientId(@PathVariable UUID clientId) {
+    public ResponseEntity<List<StoreDTO>> findByClientId(@PathVariable UUID clientId) {
         log.info("find stores for client {}", clientId);
         return new ResponseEntity<>(storeService.findByClientId(clientId), OK);
     }

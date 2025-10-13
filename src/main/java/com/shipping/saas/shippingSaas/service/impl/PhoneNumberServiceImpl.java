@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,6 +19,7 @@ import java.util.UUID;
 @Slf4j
 @Repository
 @RequiredArgsConstructor
+@Transactional
 public class PhoneNumberServiceImpl implements PhoneNumbersService {
 
     private final PhoneNumberRepository phoneNumberRepository;
@@ -46,6 +48,7 @@ public class PhoneNumberServiceImpl implements PhoneNumbersService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<PhoneNumberDTO> findById(UUID phoneNumbersId) {
         log.info("finding phone number for {} type {}", phoneNumbersId, phoneNumbersId);
 
@@ -57,6 +60,7 @@ public class PhoneNumberServiceImpl implements PhoneNumbersService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<PhoneNumberDTO> findPhoneNumbersByOwnerId(UUID ownerId) {
 
         log.info("finding phone numbers for {}", ownerId);

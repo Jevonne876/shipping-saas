@@ -32,7 +32,7 @@ public class StoreServiceImpl implements StoreService {
 
         //Map to entity
         Store store = storeMapper.toEntity(storeDTO);
-
+        store.setIsActive(true);
         //Save the store first to generate its ID
         Store savedStore = storeRepository.save(store);
 
@@ -70,7 +70,7 @@ public class StoreServiceImpl implements StoreService {
 
             // 1️⃣ Convert DTO → Entity
             Store store = storeMapper.toEntity(storeDTO);
-            store.setActive(true);
+            store.setIsActive(true);
 
             // 2️⃣ Save parent store first to generate UUID
             Store savedStore = storeRepository.save(store);

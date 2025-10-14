@@ -29,6 +29,7 @@ public class AddressesServiceImpl implements AddressesService {
         log.info("creating new address for owner {} address type {}", addresses.getAddressableId(), addresses.getAddressableType());
 
         Addresses addressesEntity = addressesMapper.toEntity(addresses);
+        addressesEntity.setIsActive(true);
 
         return addressesMapper.toDto(addressesRepository.save(addressesEntity));
     }

@@ -37,8 +37,9 @@ public class Store {
     @Column(nullable = false)
     private String code; // e.g. "KNG", "MBJ"
 
-    @Builder.Default
-    private boolean isActive = true;
+    @Column(name = "is_active", nullable = false)
+    private Boolean isActive = true;
+
 
     @CreatedDate
     @Column(name = "created_at", nullable = false, updatable = false)

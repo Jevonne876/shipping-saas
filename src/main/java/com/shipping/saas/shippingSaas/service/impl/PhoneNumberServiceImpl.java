@@ -32,6 +32,7 @@ public class PhoneNumberServiceImpl implements PhoneNumbersService {
         log.info("creating phone numbers for {} type {}", phoneNumbers.getOwnerId(), phoneNumbers.getPhoneType());
 
         PhoneNumbers phoneNumber = phoneNumberMapper.toEntity(phoneNumbers);
+        phoneNumber.setIsActive(true);
 
         return phoneNumberMapper.toDto(phoneNumberRepository.save(phoneNumber));
     }
@@ -45,6 +46,7 @@ public class PhoneNumberServiceImpl implements PhoneNumbersService {
             .toList();
 
         // 2️⃣ Save them all
+        entities.stream().forEach(phoneNumbers -> phoneNumbers.setIsActive(true));
         List<PhoneNumbers> savedEntities = phoneNumberRepository.saveAll(entities);
 
         // 3️⃣ Convert saved entities → DTOs

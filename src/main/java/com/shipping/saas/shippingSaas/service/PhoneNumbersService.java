@@ -1,6 +1,5 @@
 package com.shipping.saas.shippingSaas.service;
 
-import com.shipping.saas.shippingSaas.domain.PhoneNumbers;
 import com.shipping.saas.shippingSaas.domain.dto.PhoneNumberDTO;
 
 import java.util.List;
@@ -9,7 +8,9 @@ import java.util.UUID;
 
 public interface PhoneNumbersService {
 
-    PhoneNumberDTO createPhoneNumbers(PhoneNumberDTO dto);
+    PhoneNumberDTO createPhoneNumber(PhoneNumberDTO dto);
+
+    List<PhoneNumberDTO> createPhoneNumbers(List<PhoneNumberDTO> dtos);
 
     PhoneNumberDTO updatePhoneNumbers(PhoneNumberDTO dto);
 

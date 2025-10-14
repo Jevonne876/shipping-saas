@@ -24,7 +24,7 @@ public class PhoneNumberResource {
 
         log.info("creating phone number {}", phoneNumber);
 
-        return new ResponseEntity<>(phoneNumberService.createPhoneNumbers(phoneNumber), CREATED);
+        return new ResponseEntity<>(phoneNumberService.createPhoneNumber(phoneNumber), CREATED);
     }
 
     @PutMapping

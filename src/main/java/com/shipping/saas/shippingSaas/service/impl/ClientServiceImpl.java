@@ -1,7 +1,7 @@
 package com.shipping.saas.shippingSaas.service.impl;
 
 import com.shipping.saas.shippingSaas.domain.clients.Client;
-import com.shipping.saas.shippingSaas.domain.dto.ClientDTO;
+import com.shipping.saas.shippingSaas.domain.dto.*;
 import com.shipping.saas.shippingSaas.exceptions.DuplicateResourceException;
 import com.shipping.saas.shippingSaas.exceptions.PlatformUserNotFoundException;
 import com.shipping.saas.shippingSaas.repository.ClientRepository;
@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -22,7 +23,17 @@ import java.util.UUID;
 public class ClientServiceImpl implements ClientService {
 
     private final ClientRepository clientRepository;
+
     private final ClientMapper clientMapper;
+
+    private final AddressesServiceImpl addressesService;
+
+    private final PhoneNumberServiceImpl phoneNumberService;
+
+    private final StoreServiceImpl storeService;
+
+    private final WareHouseServiceImpl wareHouseService;
+
 
     @Override
     public ClientDTO create(ClientDTO dto) {
@@ -30,7 +41,48 @@ public class ClientServiceImpl implements ClientService {
 
         Client client = clientMapper.toEntity(dto);
 
-        ClientDTO clientDTO = clientMapper.toDto(clientRepository.save(client));
+        if (client.getTimeZone() == null) {
+            client.setTimeZone("America/Jamaica");
+        }
+
+        Client savedClient = clientRepository.save(client);
+
+        ClientDTO clientDTO = clientMapper.toDto(savedClient);
+
+        AddressesDTO addressesDTO = new AddressesDTO();
+        if (dto.getAddress() != null) {
+            dto.getAddress().setAddressableId(savedClient.getId());
+            dto.getAddress().setIsActive(true);
+            addressesDTO = addressesService.createAddresses(dto.getAddress());
+        }
+        List<PhoneNumberDTO> phoneNumberDTOS = Collections.emptyList();
+        if (dto.getPhoneNumbers() != null) {
+            dto.getPhoneNumbers().stream().forEach((phoneNumber) -> {
+                phoneNumber.setOwnerId(savedClient.getId());
+                phoneNumber.setIsActive(true);
+            });
+            phoneNumberDTOS = phoneNumberService.createPhoneNumbers(dto.getPhoneNumbers());
+        }
+
+
+        List<StoreDTO> storeDTOS = Collections.emptyList();
+        if (dto.getStores() != null) {
+            dto.getStores().stream().forEach((store) -> {
+                store.setClient(clientDTO);
+            });
+            storeDTOS = storeService.create(dto.getStores());
+        }
+
+        WarehouseAddressDTO warehouseAddressDTO = new WarehouseAddressDTO();
+        if (dto.getWarehouseAddress() != null) {
+            dto.getWarehouseAddress().setClient(clientDTO);
+            warehouseAddressDTO = wareHouseService.create(dto.getWarehouseAddress());
+        }
+
+        clientDTO.setWarehouseAddress(warehouseAddressDTO);
+        clientDTO.setPhoneNumbers(phoneNumberDTOS);
+        clientDTO.setStores(storeDTOS);
+        clientDTO.setAddress(addressesDTO);
 
         return clientDTO;
     }

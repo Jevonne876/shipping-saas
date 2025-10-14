@@ -27,13 +27,30 @@ public class PhoneNumberServiceImpl implements PhoneNumbersService {
     private final PhoneNumberMapper phoneNumberMapper;
 
     @Override
-    public PhoneNumberDTO createPhoneNumbers(PhoneNumberDTO phoneNumbers) {
+    public PhoneNumberDTO createPhoneNumber(PhoneNumberDTO phoneNumbers) {
 
         log.info("creating phone numbers for {} type {}", phoneNumbers.getOwnerId(), phoneNumbers.getPhoneType());
 
         PhoneNumbers phoneNumber = phoneNumberMapper.toEntity(phoneNumbers);
 
         return phoneNumberMapper.toDto(phoneNumberRepository.save(phoneNumber));
+    }
+
+    @Override
+    public List<PhoneNumberDTO> createPhoneNumbers(List<PhoneNumberDTO> dtos) {
+
+        // 1️⃣ Convert all DTOs → Entities
+        List<PhoneNumbers> entities = dtos.stream()
+            .map(phoneNumberMapper::toEntity)
+            .toList();
+
+        // 2️⃣ Save them all
+        List<PhoneNumbers> savedEntities = phoneNumberRepository.saveAll(entities);
+
+        // 3️⃣ Convert saved entities → DTOs
+        return savedEntities.stream()
+            .map(phoneNumberMapper::toDto)
+            .toList();
     }
 
     @Override

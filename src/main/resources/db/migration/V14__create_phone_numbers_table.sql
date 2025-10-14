@@ -4,7 +4,7 @@ CREATE TABLE phone_numbers
   id           UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
 
   owner_id     UUID         NOT NULL,
-  owner_type   VARCHAR(50)  NOT NULL CHECK ( owner_type IN ('CLIENT', 'CUSTOMER', 'STAFF', 'WAREHOUSE')),
+  owner_type   VARCHAR(50)  NOT NULL CHECK ( owner_type IN ('CLIENT', 'CUSTOMER', 'STAFF', 'WAREHOUSE','STORE')),
   phone_number VARCHAR(30)  NOT NULL,
   phone_type   VARCHAR(50)  NOT NULL,
   is_primary   BOOLEAN          DEFAULT TRUE,

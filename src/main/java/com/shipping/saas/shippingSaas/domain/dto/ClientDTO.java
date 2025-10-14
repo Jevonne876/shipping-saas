@@ -4,14 +4,16 @@ import lombok.*;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString
 public class ClientDTO {
-    private String id;
+    private UUID id;
     private String name;
     private String contactPersonFirstName;
     private String contactPersonLastName;

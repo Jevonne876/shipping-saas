@@ -2,8 +2,6 @@ package com.shipping.saas.shippingSaas.domain.dto;
 
 import com.shipping.saas.shippingSaas.domain.enums.OwnerType;
 import com.shipping.saas.shippingSaas.domain.enums.PhoneType;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import lombok.*;
 
 import java.time.Instant;

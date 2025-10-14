@@ -1,6 +1,5 @@
 package com.shipping.saas.shippingSaas.domain.dto;
 
-import com.shipping.saas.shippingSaas.domain.PhoneNumbers;
 import lombok.*;
 
 import java.time.Instant;
@@ -20,6 +19,7 @@ public class WarehouseAddressDTO {
     private String name;
     private String code;
     private AddressesDTO address;
+    private String suitePrefix;
     private List<PhoneNumberDTO> phoneNumbers;
     private Instant createdAt;
     private Instant updatedAt;

@@ -12,6 +12,8 @@ public interface StoreService {
 
     public StoreDTO create(StoreDTO store);
 
+    public List<StoreDTO>  create(List<StoreDTO> storeDTOs);
+
     public StoreDTO update(StoreDTO store);
 
     public Optional<StoreDTO> findById(UUID id);

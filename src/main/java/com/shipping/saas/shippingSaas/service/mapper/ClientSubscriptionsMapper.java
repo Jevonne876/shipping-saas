@@ -20,5 +20,6 @@ public interface ClientSubscriptionsMapper {
     @Mapping(target = "client", ignore = true)              // handled separately in service
     @Mapping(target = "subscriptionPlan", ignore = true)
     // set manually or via lookup
+    @Mapping(target = "isActive", source = "isActive")
     ClientSubscriptions toEntity(ClientSubscriptionsDTO dto);
 }

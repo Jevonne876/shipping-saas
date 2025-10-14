@@ -4,6 +4,11 @@ import com.shipping.saas.shippingSaas.domain.clients.Client;
 import com.shipping.saas.shippingSaas.domain.clients.ClientCustomer;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.Instant;
 import java.util.List;
@@ -16,6 +21,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@EntityListeners(AuditingEntityListener.class)
 public class WarehouseAddress {
 
     @Id
@@ -27,12 +33,12 @@ public class WarehouseAddress {
 
 
     // 🔗 Each client has one warehouse address (or main hub)
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "client_id", nullable = false, unique = true)
     private Client client;
 
     // 🔗 Many client customers can share this warehouse
-    @OneToMany(mappedBy = "warehouse")
+    @OneToMany(mappedBy = "warehouse", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<ClientCustomer> clientCustomers;
 
     // 🏷 Label for display
@@ -51,16 +57,19 @@ public class WarehouseAddress {
     @Column(name = "is_active")
     private boolean isActive = true;
 
-    @Builder.Default
+    @CreatedDate
     @Column(name = "created_at")
-    private Instant createdAt = Instant.now();
+    private Instant createdAt;
 
+    @CreatedBy
     @Column(name = "created_by", nullable = false)
     private String createdBy;
 
+    @LastModifiedDate
     @Column(name = "updated_at")
     private Instant updatedAt;
 
+    @LastModifiedBy
     @Column(name = "updated_by", nullable = false)
     private String updatedBy;
 }

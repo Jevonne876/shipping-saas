@@ -1,8 +1,6 @@
 package com.shipping.saas.shippingSaas.domain.dto;
 
 import com.shipping.saas.shippingSaas.domain.enums.AddressableType;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import lombok.*;
 
 import java.time.Instant;

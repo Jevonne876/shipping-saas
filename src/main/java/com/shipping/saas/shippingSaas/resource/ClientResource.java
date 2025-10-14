@@ -36,7 +36,6 @@ public class ClientResource {
         return new ResponseEntity(clientService.create(client), CREATED);
     }
 
-
     /**
      * Gets all clients.
      *

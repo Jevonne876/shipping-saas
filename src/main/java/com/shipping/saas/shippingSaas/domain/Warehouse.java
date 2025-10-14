@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name = "warehouse_addresses")
+@Table(name = "warehouse")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -49,9 +49,6 @@ public class Warehouse {
     @Column(name = "suite_prefix", length = 20, unique = true, nullable = false)
     private String suitePrefix;
 
-    // 🌍 City reference (useful for region grouping)
-    @Column(length = 100)
-    private String city;
 
     @Builder.Default
     @Column(name = "is_active")

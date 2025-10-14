@@ -5,7 +5,7 @@ CREATE TABLE client_customers
   -- 🔗 Foreign Keys
   client_id    UUID         NOT NULL REFERENCES clients (id) ON DELETE CASCADE,
   customer_id  UUID         NOT NULL REFERENCES customers (id) ON DELETE CASCADE,
-  warehouse_id UUID         REFERENCES warehouse_addresses (id) ON DELETE SET NULL,
+  warehouse_id UUID         REFERENCES warehouse (id) ON DELETE SET NULL,
 
   -- ⚙️ Relationship Details
   status       VARCHAR(50)      DEFAULT 'active',

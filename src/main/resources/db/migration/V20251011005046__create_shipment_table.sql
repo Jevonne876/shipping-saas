@@ -4,7 +4,7 @@ CREATE TABLE shipments
 
   -- 🔗 Foreign keys
   client_id        UUID               NOT NULL REFERENCES clients (id) ON DELETE CASCADE,
-  warehouse_id     UUID               REFERENCES warehouse_addresses (id) ON DELETE SET NULL,
+  warehouse_id     UUID               REFERENCES warehouse (id) ON DELETE SET NULL,
 
   -- 📦 Shipment details
   shipment_number  VARCHAR(50) UNIQUE NOT NULL,        -- e.g., SHP-20251011-001

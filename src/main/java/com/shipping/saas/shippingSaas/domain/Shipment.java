@@ -32,7 +32,7 @@ public class Shipment {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "warehouse_id")
-    private WarehouseAddress warehouse;
+    private Warehouse warehouse;
 
     // 🔗 Link to packages
     @OneToMany(mappedBy = "shipment", cascade = CascadeType.ALL)

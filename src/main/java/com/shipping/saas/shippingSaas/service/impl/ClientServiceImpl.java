@@ -73,13 +73,13 @@ public class ClientServiceImpl implements ClientService {
             storeDTOS = storeService.create(dto.getStores());
         }
 
-        WarehouseAddressDTO warehouseAddressDTO = new WarehouseAddressDTO();
+        WarehouseDTO warehouseDTO = new WarehouseDTO();
         if (dto.getWarehouseAddress() != null) {
             dto.getWarehouseAddress().setClient(clientDTO);
-            warehouseAddressDTO = wareHouseService.create(dto.getWarehouseAddress());
+            warehouseDTO = wareHouseService.create(dto.getWarehouseAddress());
         }
 
-        clientDTO.setWarehouseAddress(warehouseAddressDTO);
+        clientDTO.setWarehouseAddress(warehouseDTO);
         clientDTO.setPhoneNumbers(phoneNumberDTOS);
         clientDTO.setStores(storeDTOS);
         clientDTO.setAddress(addressesDTO);

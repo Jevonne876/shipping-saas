@@ -26,7 +26,7 @@ public class ClientDTO {
     private AddressesDTO address;
     private List<PhoneNumberDTO> phoneNumbers;
     private List<StoreDTO> stores;
-    private WarehouseAddressDTO warehouseAddress;
+    private WarehouseDTO warehouseAddress;
 }
 
 

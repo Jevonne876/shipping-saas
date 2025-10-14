@@ -2,7 +2,7 @@ package com.shipping.saas.shippingSaas.domain.clients;
 
 import com.shipping.saas.shippingSaas.domain.Customers;
 import com.shipping.saas.shippingSaas.domain.Store;
-import com.shipping.saas.shippingSaas.domain.WarehouseAddress;
+import com.shipping.saas.shippingSaas.domain.Warehouse;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedBy;
@@ -38,7 +38,7 @@ public class ClientCustomer {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "warehouse_id", nullable = false)
-    private WarehouseAddress warehouse;
+    private Warehouse warehouse;
 
 
     @ManyToOne(fetch = FetchType.LAZY)

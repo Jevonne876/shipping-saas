@@ -12,7 +12,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class WarehouseAddressDTO {
+public class WarehouseDTO {
 
     private UUID id;
     private ClientDTO client;

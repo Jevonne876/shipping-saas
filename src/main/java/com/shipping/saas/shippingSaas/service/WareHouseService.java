@@ -1,7 +1,6 @@
 package com.shipping.saas.shippingSaas.service;
 
-import com.shipping.saas.shippingSaas.domain.WarehouseAddress;
-import com.shipping.saas.shippingSaas.domain.dto.WarehouseAddressDTO;
+import com.shipping.saas.shippingSaas.domain.dto.WarehouseDTO;
 
 import java.util.List;
 import java.util.Optional;
@@ -9,15 +8,15 @@ import java.util.UUID;
 
 public interface WareHouseService {
 
-    public WarehouseAddressDTO create(WarehouseAddressDTO warehouseAddress);
+    public WarehouseDTO create(WarehouseDTO warehouseAddress);
 
-    public WarehouseAddressDTO update(WarehouseAddressDTO warehouseAddress);
+    public WarehouseDTO update(WarehouseDTO warehouseAddress);
 
-    public Optional<WarehouseAddressDTO> findById(UUID id);
+    public Optional<WarehouseDTO> findById(UUID id);
 
-    public Optional<WarehouseAddressDTO> findByClientId(UUID id);
+    public Optional<WarehouseDTO> findByClientId(UUID id);
 
-    public List<WarehouseAddressDTO> findAll();
+    public List<WarehouseDTO> findAll();
 
 
 }

@@ -22,7 +22,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Builder
 @EntityListeners(AuditingEntityListener.class)
-public class WarehouseAddress {
+public class Warehouse {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

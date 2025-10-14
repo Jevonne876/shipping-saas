@@ -1,6 +1,6 @@
 package com.shipping.saas.shippingSaas.resource;
 
-import com.shipping.saas.shippingSaas.domain.dto.WarehouseAddressDTO;
+import com.shipping.saas.shippingSaas.domain.dto.WarehouseDTO;
 import com.shipping.saas.shippingSaas.service.impl.WareHouseServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +21,7 @@ public class WarehouseAddressResource {
     private WareHouseServiceImpl wareHouseServiceImpl;
 
     @PostMapping
-    public ResponseEntity<WarehouseAddressDTO> save(@RequestBody WarehouseAddressDTO warehouseAddress) {
+    public ResponseEntity<WarehouseDTO> save(@RequestBody WarehouseDTO warehouseAddress) {
         log.info("save warehouse address {}", warehouseAddress);
         return new ResponseEntity<>(wareHouseServiceImpl.create(warehouseAddress), OK);
     }

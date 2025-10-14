@@ -5,13 +5,12 @@ import com.shipping.saas.shippingSaas.domain.clients.ClientSubscriptions;
 import com.shipping.saas.shippingSaas.domain.dto.ClientDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring", uses = {
     AddressesMapper.class,
     PhoneNumberMapper.class,
     StoreMapper.class,
-    WarehouseAddressMapper.class
+    WarehouseMapper.class
 })
 public interface ClientMapper {
 

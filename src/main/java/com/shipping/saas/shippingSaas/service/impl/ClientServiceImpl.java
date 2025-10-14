@@ -1,17 +1,23 @@
 package com.shipping.saas.shippingSaas.service.impl;
 
 import com.shipping.saas.shippingSaas.domain.clients.Client;
+import com.shipping.saas.shippingSaas.domain.clients.SubscriptionPlans;
 import com.shipping.saas.shippingSaas.domain.dto.*;
+import com.shipping.saas.shippingSaas.domain.enums.BillingCycle;
 import com.shipping.saas.shippingSaas.exceptions.DuplicateResourceException;
 import com.shipping.saas.shippingSaas.exceptions.PlatformUserNotFoundException;
 import com.shipping.saas.shippingSaas.repository.ClientRepository;
+import com.shipping.saas.shippingSaas.repository.SubscriptionPlanRepository;
 import com.shipping.saas.shippingSaas.service.ClientService;
 import com.shipping.saas.shippingSaas.service.mapper.ClientMapper;
+import com.shipping.saas.shippingSaas.service.mapper.ClientSubscriptionsMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.flywaydb.core.internal.util.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Instant;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
@@ -33,6 +39,12 @@ public class ClientServiceImpl implements ClientService {
     private final StoreServiceImpl storeService;
 
     private final WareHouseServiceImpl wareHouseService;
+
+    private final ClientSubscriptionServiceImpl clientSubscriptionService;
+
+    private final SubscriptionPlanRepository subscriptionPlanRepository;
+
+    private final ClientSubscriptionsMapper clientSubscriptionsMapper;
 
 
     @Override
@@ -79,10 +91,17 @@ public class ClientServiceImpl implements ClientService {
             warehouseDTO = wareHouseService.create(dto.getWarehouseAddress());
         }
 
+        ClientSubscriptionsDTO clientSubscriptionsDTO = new ClientSubscriptionsDTO();
+        if (dto.getSubscriptionPlanId() != null && StringUtils.hasText(dto.getBillingCycle())) {
+            clientSubscriptionsDTO = saveClientSubscriptions(dto, savedClient);
+        }
+
         clientDTO.setWarehouseAddress(warehouseDTO);
         clientDTO.setPhoneNumbers(phoneNumberDTOS);
         clientDTO.setStores(storeDTOS);
         clientDTO.setAddress(addressesDTO);
+        clientDTO.setSubscriptionPlanId(clientSubscriptionsDTO.getSubscriptionPlanId());
+        clientDTO.setBillingCycle(clientSubscriptionsDTO.getBillingCycle());
 
         return clientDTO;
     }
@@ -155,6 +174,38 @@ public class ClientServiceImpl implements ClientService {
     //Todo
     @Override
     public void deleteById(UUID clientId) {
+
+    }
+
+    private ClientSubscriptionsDTO saveClientSubscriptions(ClientDTO clientDTO, Client client) {
+
+        log.info("Saving client subscriptions for client with id {}", client.getId());
+
+        SubscriptionPlans subscriptionPlans = subscriptionPlanRepository
+            .findById(clientDTO
+                .getSubscriptionPlanId())
+            .orElseThrow(() -> new IllegalArgumentException("Subscription Plan not found"));
+
+        ClientSubscriptionsDTO clientSubscriptionsDTO = new ClientSubscriptionsDTO();
+
+        clientSubscriptionsDTO.setSubscriptionPlanId(subscriptionPlans.getId());
+        clientSubscriptionsDTO.setClientId(client.getId());
+        clientSubscriptionsDTO.setSubscriptionPlanName(subscriptionPlans.getName());
+
+        clientSubscriptionsDTO.setStartDate(Instant.now());
+        if (clientDTO.getBillingCycle().equals(BillingCycle.MONTHLY.toString())) {
+            clientSubscriptionsDTO.setBillingCycle(BillingCycle.MONTHLY.toString());
+            clientSubscriptionsDTO.setPriceAtSignup(subscriptionPlans.getMonthlyPrice());
+        } else if (clientDTO.getBillingCycle().equals(BillingCycle.ANNUAL.toString())) {
+            clientSubscriptionsDTO.setBillingCycle(BillingCycle.ANNUAL.toString());
+            clientSubscriptionsDTO.setPriceAtSignup(subscriptionPlans.getAnnualPrice());
+        } else {
+            throw new RuntimeException("Invalid subscription plan");
+        }
+
+        clientSubscriptionsDTO.setIsActive(true);
+
+        return clientSubscriptionService.save(clientSubscriptionsDTO);
 
     }
 }

@@ -19,7 +19,8 @@ public class ClientDTO {
     private String contactPersonLastName;
     private String email;
     private String companyCode;
-    private String subscriptionPlan;   // ← must exist and be spelled exactly
+    private UUID subscriptionPlanId;   // ← must exist and be spelled exactly
+    private String billingCycle;
     private String logoUrl;
     private Instant createdAt;
     private Instant updatedAt;

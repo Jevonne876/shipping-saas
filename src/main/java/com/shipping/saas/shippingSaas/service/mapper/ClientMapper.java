@@ -16,7 +16,7 @@ public interface ClientMapper {
 
 
 
-    @Mapping(target = "subscriptionPlan", expression = "java(getActiveSubscriptionName(client))")
+
     ClientDTO toDto(Client client);
 
     // DTO → Entity

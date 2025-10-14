@@ -2,6 +2,7 @@ package com.shipping.saas.shippingSaas.domain.dto;
 
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.UUID;
 
@@ -16,6 +17,7 @@ public class ClientSubscriptionsDTO {
     private UUID clientId;
     private UUID subscriptionPlanId;
     private String subscriptionPlanName; // or code, whichever you prefer
+    private BigDecimal priceAtSignup;
     private Boolean isActive;
     private String billingCycle;
     private String notes;

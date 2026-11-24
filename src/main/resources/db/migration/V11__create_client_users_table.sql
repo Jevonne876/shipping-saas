@@ -5,7 +5,6 @@ CREATE TABLE client_users
   first_name    VARCHAR(100)        NOT NULL,
   last_name     VARCHAR(100)        NOT NULL,
   email         VARCHAR(255) UNIQUE NOT NULL,
-  password_hash TEXT                NOT NULL,
   role_id UUID REFERENCES roles(id) ON DELETE SET NULL,
   is_active     BOOLEAN          DEFAULT TRUE,
   created_at    TIMESTAMP        DEFAULT CURRENT_TIMESTAMP,

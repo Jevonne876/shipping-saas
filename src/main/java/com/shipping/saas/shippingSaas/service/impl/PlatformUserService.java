@@ -15,29 +15,10 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class PlatformUserService implements UserDetailsService {
+public class PlatformUserService  {
 
     private final PlatformUserRepository platformUserRepository;
 
-
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-
-        PlatformUser user = platformUserRepository.findByEmail(username)
-            .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-
-
-//        return new CustomUserDetails(
-//            user.getEmail(),
-//            user.getPasswordHash(),
-//            List.of(new SimpleGrantedAuthority(user.getRoleId().getName())),
-//            user.getUserType(), // Or .name() if it's an enum
-//            "test"
-//
-//        );
-
-        return null;
-    }
 
     public PlatformUser findByEmail(String email) {
         return platformUserRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User not found"));

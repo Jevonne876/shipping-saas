@@ -35,7 +35,6 @@ public class PlatformUser {
     private String phoneNumber;
 
 
-
     @ManyToOne
     @JoinColumn(name = "role_id")
     private Role roleId;

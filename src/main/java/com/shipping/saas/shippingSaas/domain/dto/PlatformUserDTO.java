@@ -14,7 +14,7 @@ public class PlatformUserDTO {
     private String lastName;
     private String email;
     private String phoneNumber;
-    private String passwordHash;
+
     private String role;
     private String userType;
     private String streetAddress;

@@ -20,7 +20,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class ClientUserServiceImpl implements UserDetailsService, com.shipping.saas.shippingSaas.service.ClientUserService {
+public class ClientUserServiceImpl implements com.shipping.saas.shippingSaas.service.ClientUserService {
 
     private final ClientUserRepository clientUserRepository;
 
@@ -30,21 +30,6 @@ public class ClientUserServiceImpl implements UserDetailsService, com.shipping.s
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
-
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-
-        ClientUser user = clientUserRepository.findByEmail(username)
-            .orElseThrow(() -> new UsernameNotFoundException(username));
-
-        return new CustomUserDetails(
-            user.getEmail(),
-            user.getPasswordHash(),
-            List.of(new SimpleGrantedAuthority(user.getRoleId().getName())),
-            "Testing",
-            user.getClient().getCompanyCode()
-        );
-    }
 
     @Override
     public ClientUser create(ClientUserDTO clientUser) throws Exception {
@@ -61,7 +46,6 @@ public class ClientUserServiceImpl implements UserDetailsService, com.shipping.s
             .firstName(clientUser.getFirstName())
             .lastName(clientUser.getLastName())
             .email(clientUser.getEmail())
-            .passwordHash(bCryptPasswordEncoder.encode(clientUser.getPasswordHash()))
             .roleId(role)
             .client(client)
             .build();

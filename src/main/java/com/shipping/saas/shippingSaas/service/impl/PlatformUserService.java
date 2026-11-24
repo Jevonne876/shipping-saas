@@ -27,14 +27,16 @@ public class PlatformUserService implements UserDetailsService {
             .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
 
-        return new CustomUserDetails(
-            user.getEmail(),
-            user.getPasswordHash(),
-            List.of(new SimpleGrantedAuthority(user.getRoleId().getName())),
-            user.getUserType(), // Or .name() if it's an enum
-            "test"
+//        return new CustomUserDetails(
+//            user.getEmail(),
+//            user.getPasswordHash(),
+//            List.of(new SimpleGrantedAuthority(user.getRoleId().getName())),
+//            user.getUserType(), // Or .name() if it's an enum
+//            "test"
+//
+//        );
 
-        );
+        return null;
     }
 
     public PlatformUser findByEmail(String email) {

@@ -41,10 +41,6 @@ public class Customers {
     private List<ClientCustomer> clientCustomers;
 
 
-    @Column(nullable = false)
-    @JsonIgnore
-    private String passwordHash;
-
     @CreatedDate
     private Instant createdAt;
 

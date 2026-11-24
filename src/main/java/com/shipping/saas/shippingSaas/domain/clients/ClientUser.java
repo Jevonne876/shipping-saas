@@ -41,10 +41,6 @@ public class ClientUser {
     private String email;
 
 
-    @Column(nullable = false)
-    @JsonIgnore
-    private String passwordHash;
-
     @ManyToOne
     @JoinColumn(name = "role_id")
     private Role roleId;

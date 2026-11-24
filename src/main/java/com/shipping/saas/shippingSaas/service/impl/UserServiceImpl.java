@@ -60,7 +60,6 @@ public class UserServiceImpl implements UserService {
         platformUser.setLastName(newUser.getLastName());
         platformUser.setEmail(newUser.getEmail());
         platformUser.setPhoneNumber(newUser.getPhoneNumber());
-        platformUser.setPasswordHash(passwordEncoder.encode(newUser.getPasswordHash()));
         platformUser.setRoleId(role);
         platformUser.setStreetAddress(newUser.getStreetAddress());
         platformUser.setCity(newUser.getCity());

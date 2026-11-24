@@ -19,8 +19,6 @@ public class ClientUserDTO {
 
     private String phoneNumber;
 
-    private String passwordHash;
-
     private String userType;
 
     private String role;

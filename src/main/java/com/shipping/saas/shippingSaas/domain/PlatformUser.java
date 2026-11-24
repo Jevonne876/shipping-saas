@@ -34,9 +34,7 @@ public class PlatformUser {
     @Column(unique = true, nullable = false)
     private String phoneNumber;
 
-    @Column(nullable = false)
-    @JsonIgnore
-    private String passwordHash;
+
 
     @ManyToOne
     @JoinColumn(name = "role_id")
